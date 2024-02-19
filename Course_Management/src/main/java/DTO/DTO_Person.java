@@ -9,9 +9,10 @@ package DTO;
  * @author Paul
  */
 public class DTO_Person {
-    private String id, last_name, first_name, hire_date, enrollment_date;
+    private int id;
+    private String last_name, first_name, hire_date, enrollment_date;
 
-    public DTO_Person(String id, String last_name, String first_name, String hire_date, String enrollment_date) {
+    public DTO_Person(int id, String last_name, String first_name, String hire_date, String enrollment_date) {
         this.id = id;
         this.last_name = last_name;
         this.first_name = first_name;
@@ -26,7 +27,7 @@ public class DTO_Person {
         this.enrollment_date = enrollment_date;
     }
 
-    public String getId() {
+    public int getId() {
         return id;
     }
 

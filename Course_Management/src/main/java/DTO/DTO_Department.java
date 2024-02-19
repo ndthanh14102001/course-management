@@ -15,14 +15,15 @@ import java.time.LocalDateTime;
  * @author Duc Anh
  */
 public class DTO_Department {
-    String DEPARTMENTID, NAME, ADMINISTRATOR;
+    int DEPARTMENTID;
+    String NAME, ADMINISTRATOR;
     Double BUDGET;
     Date STARTDATE;
 
     public DTO_Department() {
     }
 
-    public DTO_Department(String DEPARTMENTID, String NAME, String ADMINISTRATOR, Double BUDGET, Date STARTDATE) {
+    public DTO_Department(int DEPARTMENTID, String NAME, String ADMINISTRATOR, Double BUDGET, Date STARTDATE) {
         this.DEPARTMENTID = DEPARTMENTID;
         this.NAME = NAME;
         this.ADMINISTRATOR = ADMINISTRATOR;
@@ -30,11 +31,11 @@ public class DTO_Department {
         this.STARTDATE = STARTDATE;
     }
 
-    public String getID() {
+    public int getID() {
         return DEPARTMENTID;
     }
 
-    public void setID(String DEPARTMENTID) {
+    public void setID(int DEPARTMENTID) {
         this.DEPARTMENTID = DEPARTMENTID;
     }
 

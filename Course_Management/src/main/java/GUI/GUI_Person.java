@@ -3,11 +3,15 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package GUI;
+
 import DTO.DTO_Person;
 import BUS.BUS_Person;
+import java.util.List;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author Admin
@@ -21,6 +25,20 @@ public class GUI_Person extends javax.swing.JFrame {
         initComponents();
     }
 
+     private DefaultTableModel convertPersons(List list) {
+        String[] columnNames = {"ID", "Last Name", "First Name", "Hire Date", "Enrollment Date"};
+        Object[][] data = new Object[list.size()][5];
+        for (int i = 0; i < list.size(); i++) {
+            DTO_Person persons = (DTO_Person) list.get(i);
+            data[i][0] = persons.getId();
+            data[i][1] = persons.getLast_name();
+            data[i][2] = persons.getFirst_name();
+            data[i][3] = persons.getHire_date();
+            data[i][4] = persons.getEnrollment_date();
+        }
+        DefaultTableModel model = new DefaultTableModel(data, columnNames);
+        return model;
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -84,6 +102,11 @@ public class GUI_Person extends javax.swing.JFrame {
                 jButton1MouseClicked(evt);
             }
         });
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         jLabel1.setText("ID");
 
@@ -126,11 +149,21 @@ public class GUI_Person extends javax.swing.JFrame {
                 jButton4MouseClicked(evt);
             }
         });
+        jButton4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton4ActionPerformed(evt);
+            }
+        });
 
         jButton5.setText("Delete");
         jButton5.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jButton5MouseClicked(evt);
+            }
+        });
+        jButton5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton5ActionPerformed(evt);
             }
         });
 
@@ -235,14 +268,17 @@ public class GUI_Person extends javax.swing.JFrame {
     }//GEN-LAST:event_jTextField2ActionPerformed
 
     private void jButton1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton1MouseClicked
-       String id= jTextField1.getText();
-       String last = jTextField5.getText();
-       String first = jTextField3.getText();
-       String hire = jTextField6.getText();
-       String enrollment = jTextField7.getText();
-       DTO_Person p = new DTO_Person(id, last, first, hire, enrollment);
-       BUS_Person personbll = new BUS_Person();
-       personbll.Add(p);
+
+        String last = jTextField5.getText();
+        String first = jTextField3.getText();
+        String hire = jTextField6.getText();
+        String enrollment = jTextField7.getText();
+        DTO_Person p = new DTO_Person(last, first, hire, enrollment);
+        BUS_Person personbll = new BUS_Person();
+        personbll.Add(p);
+        jTable1.removeAll();
+        List<DTO_Person> persons = personbll.Show();
+        jTable1.setModel(convertPersons(persons));
     }//GEN-LAST:event_jButton1MouseClicked
 
     private void jButton2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton2MouseClicked
@@ -254,18 +290,13 @@ public class GUI_Person extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton2MouseClicked
 
     private void formWindowActivated(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowActivated
-         BUS_Person personbll = new BUS_Person();
-         for(int i=0; i< personbll.Show().size();i++){
-            jTable1.setValueAt(personbll.Show().get(i).getId(), i, 0);
-            jTable1.setValueAt(personbll.Show().get(i).getLast_name(), i, 1);
-            jTable1.setValueAt(personbll.Show().get(i).getFirst_name(), i, 2);
-            jTable1.setValueAt(personbll.Show().get(i).getHire_date(), i, 3);
-            jTable1.setValueAt(personbll.Show().get(i).getEnrollment_date(), i, 4);
-         }
+        BUS_Person personbll = new BUS_Person();
+        List<DTO_Person> persons = personbll.Show();
+        jTable1.setModel(convertPersons(persons));
     }//GEN-LAST:event_formWindowActivated
 
     private void jButton4MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton4MouseClicked
-       try{
+        try {
             int row = jTable1.getSelectedRow();
             String id = jTable1.getModel().getValueAt(row, 0).toString();
             String last = jTextField5.getText();
@@ -275,47 +306,56 @@ public class GUI_Person extends javax.swing.JFrame {
             DTO_Person p = new DTO_Person(last, first, hire, enrollment);
             BUS_Person personbll = new BUS_Person();
             personbll.Update(p, id);
-       }
-       catch(Exception e){
-           JFrame frame = new JFrame();
-           JOptionPane.showMessageDialog(frame, "Vui lòng chọn dòng cần sửa !");
-       }
+        } catch (Exception e) {
+            JFrame frame = new JFrame();
+            JOptionPane.showMessageDialog(frame, "Vui lòng chọn dòng cần sửa !");
+        }
     }//GEN-LAST:event_jButton4MouseClicked
 
     private void jButton5MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton5MouseClicked
-        try{
+        try {
             int row = jTable1.getSelectedRow();
             String id = jTable1.getModel().getValueAt(row, 0).toString();
             BUS_Person personbll = new BUS_Person();
             personbll.Delete(id);
-       }
-       catch(Exception e){
-           JFrame frame = new JFrame();
-           JOptionPane.showMessageDialog(frame, "Vui lòng chọn dòng cần xóa !");
-       }
+        } catch (Exception e) {
+            JFrame frame = new JFrame();
+            JOptionPane.showMessageDialog(frame, "Vui lòng chọn dòng cần xóa !");
+        }
     }//GEN-LAST:event_jButton5MouseClicked
 
-    
-    private void Clear(){
+    private void Clear() {
         jTextField2.setText("");
-        for(int i=0; i< jTable1.getRowCount();i++){
+        for (int i = 0; i < jTable1.getRowCount(); i++) {
             jTable1.setValueAt("", i, 0);
             jTable1.setValueAt("", i, 1);
             jTable1.setValueAt("", i, 2);
             jTable1.setValueAt("", i, 3);
-            jTable1.setValueAt("", i, 4);        
+            jTable1.setValueAt("", i, 4);
         }
     }
-    
+
     private void jButton3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton3MouseClicked
         Clear();
-        BUS_Person personbll = new BUS_Person();       
+        BUS_Person personbll = new BUS_Person();
         jTable1.setValueAt(personbll.Show().get(0).getId(), 0, 0);
         jTable1.setValueAt(personbll.Show().get(0).getLast_name(), 0, 1);
         jTable1.setValueAt(personbll.Show().get(0).getFirst_name(), 0, 2);
         jTable1.setValueAt(personbll.Show().get(0).getHire_date(), 0, 3);
         jTable1.setValueAt(personbll.Show().get(0).getEnrollment_date(), 0, 4);
     }//GEN-LAST:event_jButton3MouseClicked
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton4ActionPerformed
+
+    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton5ActionPerformed
 
     /**
      * @param args the command line arguments
