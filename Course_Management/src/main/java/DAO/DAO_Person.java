@@ -25,7 +25,7 @@ public class DAO_Person {
     public void Add(DTO_Person p){
         try{
             Statement stmt = conn.createStatement();
-            String sql = "INSERT INTO PERSON VALUES ('"+p.getId()+"', '"+p.getLast_name()+"', '"+p.getFirst_name()+"', '"+p.getHire_date()+"','"+p.getEnrollment_date()+"')";
+            String sql = "INSERT INTO PERSON (LASTNAME, FIRSTNAME, HIREDATE, ENROLLMENTDATE) VALUES ('"+p.getLast_name()+"', '"+p.getFirst_name()+"', '"+p.getHire_date()+"','"+p.getEnrollment_date()+"')";
             stmt.executeUpdate(sql);
             
         }catch(Exception e){
@@ -61,7 +61,7 @@ public class DAO_Person {
          Statement stmt = conn.createStatement();
          ResultSet rs = stmt.executeQuery("Select * From Person");   
          while(rs.next()){
-            DTO_Person p = new DTO_Person(rs.getString("PERSONID"),rs.getString("LASTNAME"),rs.getString("FIRSTNAME"), rs.getString("HIREDATE"), rs.getString("ENROLLMENTDATE") );
+            DTO_Person p = new DTO_Person(rs.getInt("PERSONID"),rs.getString("LASTNAME"),rs.getString("FIRSTNAME"), rs.getString("HIREDATE"), rs.getString("ENROLLMENTDATE") );
             persons.add(p);
          }
       } catch (Exception e) {
@@ -76,7 +76,7 @@ public class DAO_Person {
          Statement stmt = conn.createStatement();
          ResultSet rs = stmt.executeQuery("Select * From Person Where PERSONID='"+id+"'");
          while(rs.next()){
-            DTO_Person p = new DTO_Person(rs.getString("PERSONID"),rs.getString("LASTNAME"),rs.getString("FIRSTNAME"), rs.getString("HIREDATE"), rs.getString("ENROLLMENTDATE") );
+            DTO_Person p = new DTO_Person(rs.getInt("PERSONID"),rs.getString("LASTNAME"),rs.getString("FIRSTNAME"), rs.getString("HIREDATE"), rs.getString("ENROLLMENTDATE") );
             persons.add(p);
          }
         }catch (Exception e) {

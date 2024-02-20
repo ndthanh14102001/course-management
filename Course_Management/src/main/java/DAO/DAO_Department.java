@@ -36,7 +36,7 @@ public class DAO_Department extends ConnectDB{
 
             while (rs.next()) {
                 DTO_Department dtoDepartment = new DTO_Department();
-                dtoDepartment.setID(rs.getString("DEPARTMENTID"));
+                dtoDepartment.setID(rs.getInt("DEPARTMENTID"));
                 dtoDepartment.setNAME(rs.getString("NAME"));
                 dtoDepartment.setBUDGET(rs.getDouble("BUDGET"));
                 dtoDepartment.setSTARTDATE(rs.getDate("STARTDATE"));
@@ -48,13 +48,12 @@ public class DAO_Department extends ConnectDB{
     }
     
     public int AddDepartment(DTO_Department dtoDepartment) throws SQLException {
-        String query = "Insert Department (DEPARTMENTID, NAME, BUDGET, STARTDATE, ADMINISTRATOR) VALUES (?, ?, ?, ?, ?)";
+        String query = "Insert Department (NAME, BUDGET, STARTDATE, ADMINISTRATOR) VALUES (?, ?, ?, ?)";
         PreparedStatement p = DAO_Department.getConnection().prepareStatement(query);
-        p.setString(1, dtoDepartment.getID());
-        p.setString(2, dtoDepartment.getNAME());
-        p.setDouble(3, dtoDepartment.getBUDGET());
-        p.setDate(4, new java.sql.Date(dtoDepartment.getSTARTDATE().getTime()));
-        p.setString(5, dtoDepartment.getADMINISTRATOR());
+        p.setString(1, dtoDepartment.getNAME());
+        p.setDouble(2, dtoDepartment.getBUDGET());
+        p.setDate(3, new java.sql.Date(dtoDepartment.getSTARTDATE().getTime()));
+        p.setString(4, dtoDepartment.getADMINISTRATOR());
         int result = p.executeUpdate();
         return result;
     }
@@ -67,7 +66,7 @@ public class DAO_Department extends ConnectDB{
         p.setDouble(2, dtoDepartment.getBUDGET());
         p.setDate(3, new java.sql.Date(dtoDepartment.getSTARTDATE().getTime()));
         p.setString(4, dtoDepartment.getADMINISTRATOR());
-        p.setString(5, dtoDepartment.getID());
+        p.setInt(5, dtoDepartment.getID());
         int result = p.executeUpdate();
         return result;
     }
@@ -98,7 +97,7 @@ public class DAO_Department extends ConnectDB{
 
             while (rs.next()) {
                 DTO_Department dtoDepartment = new DTO_Department();
-                dtoDepartment.setID(rs.getString("DEPARTMENTID"));
+                dtoDepartment.setID(rs.getInt("DEPARTMENTID"));
                 dtoDepartment.setNAME(rs.getString("NAME"));
                 dtoDepartment.setBUDGET(rs.getDouble("BUDGET"));
                 dtoDepartment.setSTARTDATE(rs.getDate("STARTDATE"));
