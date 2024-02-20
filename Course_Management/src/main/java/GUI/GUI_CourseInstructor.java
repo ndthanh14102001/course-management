@@ -4,17 +4,87 @@
  */
 package GUI;
 
+import BUS.BUS_CourseInstructor;
+import BUS.BUS_OnlineCourse;
+import BUS.BUS_Person;
+import DTO.DTO_Course;
+import DTO.DTO_OnlineCourse;
+import DTO.DTO_Person;
+import java.util.List;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author Admin
  */
 public class GUI_CourseInstructor extends javax.swing.JFrame {
 
+    private List<DTO_Course> courses;
+    private List<DTO_Person> currentInstructors;
+    private List<DTO_Person> ortherInstructors;
+
     /**
      * Creates new form CourseInstructor
      */
     public GUI_CourseInstructor() {
         initComponents();
+        showCoursesInCombobox();
+    }
+
+    private void showCoursesInCombobox() {
+        try {
+            this.courses = new BUS.BUS_Course().getAll();
+            for (DTO_Course course : this.courses) {
+                cbSelectCourse.addItem(course.getTITLE());
+            }
+        } catch (Exception e) {
+        }
+    }
+
+    private int getSelectedCourseId() {
+        return this.courses.get(cbSelectCourse.getSelectedIndex()).getCOURSEID();
+    }
+
+    private DTO_Person getSelectedOrtherInstructor() {
+        return this.ortherInstructors.get(ortherInstructorTable.getSelectedRow());
+    }
+
+    private DTO_Person getSelectedCurrentInstructor() {
+        return this.currentInstructors.get(currentInstructorTable.getSelectedRow());
+    }
+
+    private void showCurrentIntructorTable() {
+        int selectedCourseId = getSelectedCourseId();
+        currentInstructorTable.removeAll();
+        String[] columnNames = {"Person ID", "Last name", "First name"};
+        this.currentInstructors = new BUS_CourseInstructor().GetInstructorByCourseId(selectedCourseId);
+        Object[][] data = new Object[this.currentInstructors.size()][columnNames.length];
+        for (int i = 0; i < this.currentInstructors.size(); i++) {
+            DTO_Person person = (DTO_Person) this.currentInstructors.get(i);
+            data[i][0] = person.getId();
+            data[i][1] = person.getLast_name();
+            data[i][2] = person.getFirst_name();
+        }
+
+        DefaultTableModel model = new DefaultTableModel(data, columnNames);
+        currentInstructorTable.setModel(model);
+    }
+
+    private void showOrtherIntructorTable() {
+        int selectedCourseId = getSelectedCourseId();
+        ortherInstructorTable.removeAll();
+        String[] columnNames = {"Person ID", "Last name", "First name"};
+        this.ortherInstructors = new BUS_CourseInstructor().GetUnassignedInstructorsByCourseId(selectedCourseId);
+        Object[][] data = new Object[this.ortherInstructors.size()][columnNames.length];
+        for (int i = 0; i < this.ortherInstructors.size(); i++) {
+            DTO_Person person = (DTO_Person) this.ortherInstructors.get(i);
+            data[i][0] = person.getId();
+            data[i][1] = person.getLast_name();
+            data[i][2] = person.getFirst_name();
+        }
+
+        DefaultTableModel model = new DefaultTableModel(data, columnNames);
+        ortherInstructorTable.setModel(model);
     }
 
     /**
@@ -27,156 +97,191 @@ public class GUI_CourseInstructor extends javax.swing.JFrame {
     private void initComponents() {
 
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
-        jComboBox1 = new javax.swing.JComboBox<>();
-        jLabel1 = new javax.swing.JLabel();
+        ortherInstructorTable = new javax.swing.JTable();
         jLabel2 = new javax.swing.JLabel();
-        jComboBox2 = new javax.swing.JComboBox<>();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
-        jLabel3 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
-        jLabel4 = new javax.swing.JLabel();
-        jTextField2 = new javax.swing.JTextField();
-        jLabel5 = new javax.swing.JLabel();
-        jTextField3 = new javax.swing.JTextField();
+        cbSelectCourse = new javax.swing.JComboBox<>();
         jLabel6 = new javax.swing.JLabel();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        currentInstructorTable = new javax.swing.JTable();
+        jLabel1 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        btnRemoveAssignment = new javax.swing.JButton();
+        btnAssign = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        ortherInstructorTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null}
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null}
             },
             new String [] {
-                "Person ID", "Last Name", "First Name", "Course Id", "Course Name"
+                "Person ID", "Last Name", "First Name"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, true, false, false
+                false, false, true
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
                 return canEdit [columnIndex];
             }
         });
-        jScrollPane1.setViewportView(jTable1);
+        jScrollPane1.setViewportView(ortherInstructorTable);
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        jLabel2.setText("Course");
 
-        jLabel1.setText("Person Id");
-
-        jLabel2.setText("Course Id");
-
-        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-
-        jButton1.setText("Assign");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        cbSelectCourse.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                cbSelectCourseActionPerformed(evt);
             }
         });
-
-        jButton2.setText("Delete");
-
-        jLabel3.setText("Course Name");
-
-        jTextField1.setEnabled(false);
-
-        jLabel4.setText("Last Name");
-
-        jTextField2.setEnabled(false);
-
-        jLabel5.setText("First Name");
-
-        jTextField3.setEnabled(false);
 
         jLabel6.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
         jLabel6.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel6.setText("COURSE INSTRUCTOR");
+
+        currentInstructorTable.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null}
+            },
+            new String [] {
+                "Person ID", "Last Name", "First Name"
+            }
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, true
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        jScrollPane2.setViewportView(currentInstructorTable);
+
+        jLabel1.setText("Current Instructors");
+
+        jLabel3.setText("Orther Instructors ");
+
+        btnRemoveAssignment.setText(">>>");
+        btnRemoveAssignment.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnRemoveAssignmentActionPerformed(evt);
+            }
+        });
+
+        btnAssign.setText("<<<");
+        btnAssign.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAssignActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 743, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(36, 36, 36)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(40, 40, 40)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jLabel3)
-                            .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(18, 18, 18)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(274, 274, 274)
-                                .addComponent(jButton2))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(37, 37, 37)
-                                .addComponent(jLabel5)
-                                .addGap(18, 18, 18)
-                                .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, Short.MAX_VALUE)
-                                .addComponent(jButton1)))))
-                .addContainerGap(55, Short.MAX_VALUE))
-            .addGroup(layout.createSequentialGroup()
                 .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGap(29, 29, 29)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(cbSelectCourse, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 490, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 24, Short.MAX_VALUE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(btnRemoveAssignment, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(btnAssign, javax.swing.GroupLayout.Alignment.TRAILING))))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 490, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(33, 33, 33))
         );
 
-        layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {jTextField1, jTextField2, jTextField3});
+        layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {btnAssign, btnRemoveAssignment});
 
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addGap(18, 18, 18)
                 .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel1)
-                    .addComponent(jLabel4)
-                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel5)
-                    .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton1))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 32, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton2)
-                    .addComponent(jLabel2)
-                    .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel3)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 307, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(43, 43, 43))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel3)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 307, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(112, 112, 112)
+                                .addComponent(btnRemoveAssignment)
+                                .addGap(39, 39, 39)
+                                .addComponent(btnAssign))))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel2)
+                            .addComponent(cbSelectCourse, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(33, 33, 33)
+                        .addComponent(jLabel1)
+                        .addGap(12, 12, 12)
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 307, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(44, Short.MAX_VALUE))
         );
+
+        layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {btnAssign, btnRemoveAssignment});
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void cbSelectCourseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbSelectCourseActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton1ActionPerformed
+        showCurrentIntructorTable();
+        showOrtherIntructorTable();
+    }//GEN-LAST:event_cbSelectCourseActionPerformed
+
+    private void btnAssignActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAssignActionPerformed
+        // TODO add your handling code here:
+        if (ortherInstructorTable.getSelectedRow() > -1) {
+            DTO_Person selectedOrtherInstructor = getSelectedOrtherInstructor();
+            int selectedCourseId = getSelectedCourseId();
+            try {
+                new BUS_CourseInstructor().add(selectedOrtherInstructor.getId(), selectedCourseId);
+                showCurrentIntructorTable();
+                showOrtherIntructorTable();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+
+    }//GEN-LAST:event_btnAssignActionPerformed
+
+    private void btnRemoveAssignmentActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRemoveAssignmentActionPerformed
+        // TODO add your handling code here:
+        if (currentInstructorTable.getSelectedRow() > -1) {
+            DTO_Person selectedCurrentInstructor = getSelectedCurrentInstructor();
+            int selectedCourseId = getSelectedCourseId();
+            try {
+                new BUS_CourseInstructor().delete(selectedCurrentInstructor.getId(), selectedCourseId);
+                showCurrentIntructorTable();
+                showOrtherIntructorTable();
+            } catch (Exception e) {
+                 e.printStackTrace();
+            }
+        }
+    }//GEN-LAST:event_btnRemoveAssignmentActionPerformed
 
     /**
      * @param args the command line arguments
@@ -217,20 +322,16 @@ public class GUI_CourseInstructor extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JComboBox<String> jComboBox1;
-    private javax.swing.JComboBox<String> jComboBox2;
+    private javax.swing.JButton btnAssign;
+    private javax.swing.JButton btnRemoveAssignment;
+    private javax.swing.JComboBox<String> cbSelectCourse;
+    private javax.swing.JTable currentInstructorTable;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
-    private javax.swing.JTextField jTextField3;
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JTable ortherInstructorTable;
     // End of variables declaration//GEN-END:variables
 }
