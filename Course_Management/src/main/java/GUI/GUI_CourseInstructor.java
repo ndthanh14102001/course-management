@@ -4,6 +4,11 @@
  */
 package GUI;
 
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author Admin
@@ -15,6 +20,36 @@ public class GUI_CourseInstructor extends javax.swing.JFrame {
      */
     public GUI_CourseInstructor() {
         initComponents();
+        
+        //        try {
+//            listCourse();
+//        } catch (SQLException ex) {
+//            Logger.getLogger(GUI_ManageCourse.class.getName()).log(Level.SEVERE, null, ex);
+//        }
+
+        setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+        addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent e) {
+                int option = JOptionPane.showConfirmDialog(
+                        GUI_CourseInstructor.this,
+                        "Bạn có chắc muốn đóng ứng dụng không?",
+                        "Xác nhận đóng",
+                        JOptionPane.YES_NO_OPTION
+                );
+
+                if (option == JOptionPane.YES_OPTION) {
+                    // Thực hiện các thao tác cần thiết trước khi đóng ứng dụng
+                    // Ví dụ: Lưu dữ liệu, đóng kết nối, v.v.
+
+                    // Đóng JFrame
+                    dispose();
+                    String[] args = null;
+                    GUI_ChooseOption.main(args);
+                }
+            }
+        });
+        
     }
 
     /**
