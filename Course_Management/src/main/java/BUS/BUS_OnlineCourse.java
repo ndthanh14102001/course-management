@@ -20,11 +20,22 @@ public class BUS_OnlineCourse {
         return new DAO_OnlineCourse().getAll();
     }
 
+    public List<DTO_OnlineCourse> getByTitle(String title) {
+        return new DAO_OnlineCourse().getByTitle(title);
+    }
+
     public int add(DTO_OnlineCourse onlineCourse) throws SQLException {
         return new DAO_OnlineCourse().add(onlineCourse);
     }
 
     public List<DTO_Course> getCoursesWithoutType() throws SQLException {
         return new DAO_OnlineCourse().getCoursesWithoutType();
+    }
+
+    public int delete(int onlineCourseId) throws SQLException {
+        return new DAO_OnlineCourse().delete(onlineCourseId);
+    }
+    public int update(DTO_OnlineCourse onlineCourse) throws SQLException{
+        return new DAO_OnlineCourse().update(onlineCourse);
     }
 }

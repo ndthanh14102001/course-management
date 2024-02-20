@@ -46,6 +46,32 @@ public class DAO_OnlineCourse {
         }
         return courses;
     }
+
+    public List<DTO_OnlineCourse> getByTitle(String title) {
+        String query = "SELECT * \n"
+                + "FROM `onlinecourse` \n"
+                + "INNER JOIN `course` ON `course`.`COURSEID` = `onlinecourse`.`COURSEID` \n"
+                + "WHERE `course`.`TITLE` LIKE '%" + title + "%';";
+        ArrayList<DTO_OnlineCourse> courses = new ArrayList<DTO_OnlineCourse>();
+        try {
+            ResultSet rs = ConnectDB.doReadQuery(query);
+            if (rs != null) {
+
+                while (rs.next()) {
+                    DTO_OnlineCourse course = new DTO_OnlineCourse();
+                    course.setCOURSEID(rs.getInt("COURSEID"));
+                    course.setTITLE(rs.getString("TITLE"));
+                    course.setCREDITS(rs.getString("CREDITS"));
+                    course.setURL(rs.getString("URL"));
+                    courses.add(course);
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return courses;
+    }
+
     public int add(DTO_OnlineCourse onlineCourse) throws SQLException {
         String query = "Insert onlinecourse (COURSEID, URL) VALUES (?, ?)";
         PreparedStatement p = ConnectDB.getConnection().prepareStatement(query);
@@ -54,7 +80,16 @@ public class DAO_OnlineCourse {
         int result = p.executeUpdate();
         return result;
     }
-    
+
+    public int update(DTO_OnlineCourse onlineCourse) throws SQLException {
+        String query = "Update onlinecourse set URL = ? Where COURSEID = ?";
+        PreparedStatement p = ConnectDB.getConnection().prepareStatement(query);
+        p.setString(1, onlineCourse.getURL());
+        p.setInt(2, onlineCourse.getCOURSEID());
+        int result = p.executeUpdate();
+        return result;
+    }
+
     public List<DTO_Course> getCoursesWithoutType() {
         String query = "SELECT * FROM `course` WHERE `course`.`COURSEID` NOT IN (SELECT COURSEID FROM `onsitecourse`) and `course`.`COURSEID` NOT IN (SELECT COURSEID FROM `onlinecourse`);";
         ResultSet rs = DAO_Department.doReadQuery(query);
@@ -74,5 +109,13 @@ public class DAO_OnlineCourse {
         } catch (Exception e) {
         }
         return courses;
+    }
+
+    public int delete(int onlineCourseId) throws SQLException {
+        String query = "DELETE FROM `onlinecourse` WHERE `onlinecourse`.`COURSEID` = ?;";
+        PreparedStatement p = ConnectDB.getConnection().prepareStatement(query);
+        p.setInt(1, onlineCourseId);
+        int result = p.executeUpdate();
+        return result;
     }
 }
