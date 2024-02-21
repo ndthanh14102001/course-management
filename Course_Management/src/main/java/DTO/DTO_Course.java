@@ -9,23 +9,25 @@ package DTO;
  * @author Duc Anh
  */
 public class DTO_Course {
-    String COURSEID, TITLE, CREDITS, DEPARTMENTID;
+
+    int COURSEID, DEPARTMENTID;
+    String TITLE, CREDITS;
 
     public DTO_Course() {
     }
 
-    public DTO_Course(String COURSEID, String TITLE, String CREDITS, String DEPARTMENTID) {
+    public DTO_Course(int COURSEID, String TITLE, String CREDITS, int DEPARTMENTID) {
         this.COURSEID = COURSEID;
         this.TITLE = TITLE;
         this.CREDITS = CREDITS;
         this.DEPARTMENTID = DEPARTMENTID;
     }
 
-    public String getCOURSEID() {
+    public int getCOURSEID() {
         return COURSEID;
     }
 
-    public void setCOURSEID(String COURSEID) {
+    public void setCOURSEID(int COURSEID) {
         this.COURSEID = COURSEID;
     }
 
@@ -45,12 +47,12 @@ public class DTO_Course {
         this.CREDITS = CREDITS;
     }
 
-    public String getDEPARTMENTID() {
+    public int getDEPARTMENTID() {
         return DEPARTMENTID;
     }
 
-    public void setDEPARTMENTID(String DEPARTMENTID) {
+    public void setDEPARTMENTID(int DEPARTMENTID) {
         this.DEPARTMENTID = DEPARTMENTID;
     }
-    
+
 }

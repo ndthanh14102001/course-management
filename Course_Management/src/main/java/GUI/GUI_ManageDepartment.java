@@ -440,18 +440,15 @@ public class GUI_ManageDepartment extends javax.swing.JFrame {
             PanelTableLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(PanelTableLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(PanelTableLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1)
-                    .addGroup(PanelTableLayout.createSequentialGroup()
-                        .addComponent(LabelStatus)
-                        .addGap(0, 0, Short.MAX_VALUE)))
-                .addContainerGap())
+                .addComponent(LabelStatus)
+                .addContainerGap(1188, Short.MAX_VALUE))
+            .addComponent(jScrollPane1)
         );
         PanelTableLayout.setVerticalGroup(
             PanelTableLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(PanelTableLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 406, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 406, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(LabelStatus))
         );
