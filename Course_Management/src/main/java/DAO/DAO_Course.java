@@ -54,12 +54,11 @@ public class DAO_Course extends ConnectDB {
     }
 
     public int Add_Course(DTO_Course dto__course) throws SQLException {
-        String query_course = "Insert COURSE (COURSEID, TITLE,CREDITS,DEPARTMENTID ) VALUES (?, ?, ?, ?)";
+        String query_course = "Insert COURSE ( TITLE,CREDITS,DEPARTMENTID ) VALUES (?, ?, ?)";
         PreparedStatement p_course = DAO_Course.getConnection().prepareStatement(query_course);
-        p_course.setInt(1, dto__course.getCOURSEID());
-        p_course.setString(2, dto__course.getTITLE());
-        p_course.setString(3, dto__course.getCREDITS());
-        p_course.setInt(4, dto__course.getDEPARTMENTID());
+        p_course.setString(1, dto__course.getTITLE());
+        p_course.setString(2, dto__course.getCREDITS());
+        p_course.setInt(3, dto__course.getDEPARTMENTID());
 
         int result = p_course.executeUpdate();
         return result;

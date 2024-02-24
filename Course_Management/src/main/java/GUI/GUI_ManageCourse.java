@@ -132,6 +132,9 @@ public class GUI_ManageCourse extends javax.swing.JFrame {
         this.TextFieldTitle_course.setText("");
         this.TextFieldCredits_course.setText("");
         this.jComboBox_course.setSelectedIndex(-1);
+        this.TextFieldCredits_course.requestFocus();
+    System.out.println("TextFieldCourseId_course: " + TextFieldCourseId_course.getText());
+
     }
 
     /**
@@ -201,11 +204,11 @@ public class GUI_ManageCourse extends javax.swing.JFrame {
         LabelCourseId.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         LabelCourseId.setText("Course ID: ");
 
-        TextFieldCourseId_course.setEditable(false);
         TextFieldCourseId_course.setFont(new java.awt.Font("Times New Roman", 2, 24)); // NOI18N
         TextFieldCourseId_course.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         TextFieldCourseId_course.setToolTipText("");
         TextFieldCourseId_course.setEnabled(false);
+        TextFieldCourseId_course.setFocusable(false);
         TextFieldCourseId_course.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 TextFieldCourseId_courseActionPerformed(evt);
@@ -291,11 +294,6 @@ public class GUI_ManageCourse extends javax.swing.JFrame {
         TextFieldSearch_course.setFont(new java.awt.Font("Times New Roman", 2, 24)); // NOI18N
         TextFieldSearch_course.setHorizontalAlignment(javax.swing.JTextField.LEFT);
         TextFieldSearch_course.setToolTipText("");
-        TextFieldSearch_course.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                TextFieldSearch_courseActionPerformed(evt);
-            }
-        });
         TextFieldSearch_course.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {
                 TextFieldSearch_courseKeyReleased(evt);
@@ -496,22 +494,18 @@ public class GUI_ManageCourse extends javax.swing.JFrame {
             dto__course.setTITLE(TextFieldTitle_course.getText());
             dto__course.setCREDITS(TextFieldCredits_course.getText());
 
-            dto__course.setDEPARTMENTID((int) jComboBox_course.getSelectedItem());
+            dto__course.setDEPARTMENTID((Integer) jComboBox_course.getSelectedItem());
             if (bus__course.Add_course(dto__course) > 0) {
-                //NullView();
-                JOptionPane.showMessageDialog(this, "Complete Add Course", "Message", JOptionPane.INFORMATION_MESSAGE);
-                listCourse();
                 NullView_course();
+                JOptionPane.showMessageDialog(this, "Complete Add Course", "Message", JOptionPane.INFORMATION_MESSAGE);
+
+                listCourse();
             }
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(this, "Error Add Course", "Message", JOptionPane.ERROR_MESSAGE);
             Logger.getLogger(GUI_ManageCourse.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_ButtonAddActionPerformed
-
-    private void TextFieldSearch_courseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TextFieldSearch_courseActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_TextFieldSearch_courseActionPerformed
 
     private void ButtonQuitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ButtonQuitActionPerformed
         String[] args = null;
@@ -552,8 +546,10 @@ public class GUI_ManageCourse extends javax.swing.JFrame {
         // TODO add your handling code here:
         try {
             dto__course.setCOURSEID(Integer.parseInt(TextFieldCourseId_course.getText()));
-            dto__course.setTITLE(TextFieldTitle_course.getText());
-            dto__course.setCREDITS(TextFieldCredits_course.getText());
+            String Title_course = TextFieldTitle_course.getText();
+            dto__course.setTITLE(Title_course);
+            String Credits_course = TextFieldCredits_course.getText();
+            dto__course.setCREDITS(Credits_course);
 
             // Kiểm tra kiểu dữ liệu của đối tượng trong JComboBox
             Object selectedItem = jComboBox_course.getSelectedItem();
@@ -562,14 +558,21 @@ public class GUI_ManageCourse extends javax.swing.JFrame {
                 dto__course.setDEPARTMENTID(departmentID);
             }
 
-            if (bus__course.Edit_course(dto__course) > 0) {
+            if (Title_course.isEmpty() || Credits_course.isEmpty()) {
+                JOptionPane.showMessageDialog(this, "Error: Title and Credits cannot be empty", "Message", JOptionPane.ERROR_MESSAGE);
+                return; // Return early if validation fails
+            }
+
+            int editResult = bus__course.Edit_course(dto__course);
+            if (editResult > 0) {
+
                 JOptionPane.showConfirmDialog(this, "Complete Edit Course", "Message", JOptionPane.INFORMATION_MESSAGE);
                 listCourse();
-                NullView_course();
+NullView_course();
             }
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(this, "Error Edit Course", "Message", JOptionPane.ERROR_MESSAGE);
-            Logger.getLogger(GUI_Course.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(GUI_ManageCourse.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_ButtonEditActionPerformed
 
