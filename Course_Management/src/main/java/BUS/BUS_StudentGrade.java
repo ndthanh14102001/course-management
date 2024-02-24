@@ -4,10 +4,51 @@
  */
 package BUS;
 
+import DAO.DAO_StudentGrade;
+import DTO.DTO_StudentGrade;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  *
  * @author Duc Anh
  */
 public class BUS_StudentGrade {
+    public DAO_StudentGrade daoStudentGrade = new DAO_StudentGrade();
+    public DTO_StudentGrade dtoStudentGrade = new DTO_StudentGrade();
+    public List LoadStudentGrade(int page) throws SQLException {
+        int numOfRecords = 30;
+        
+        ArrayList list = daoStudentGrade.ReadStudentGrade();
+        int size = list.size();
+        int from, to;
+        from = (page-1)*numOfRecords;
+        to = page*numOfRecords;
+        return list.subList(from, Math.min(to, size));
+    }
     
+    public int AddStudentGrade(DTO_StudentGrade dtoStudentGrade) throws SQLException {
+        int result = daoStudentGrade.AddStudentGrade(dtoStudentGrade);
+        return result;
+    }
+    
+    public int EditStudentGrade(DTO_StudentGrade dtoStudentGrade) throws SQLException {
+        int result = daoStudentGrade.EditStudentGrade(dtoStudentGrade);
+        return result;
+    }
+    
+    public int DeleteStudentGrade(String CourseId) throws SQLException {
+        int result = daoStudentGrade.DeleteStudentGrade(CourseId);
+        return result;
+    }
+    
+    public List FindStudentGrade(String searchInput) throws SQLException {
+        List list = new ArrayList();
+
+        list = daoStudentGrade.FindStudentGrade(searchInput);
+
+        return list;
+
+    }
 }
