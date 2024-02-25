@@ -50,5 +50,29 @@ public class DTO_Person {
         String res = enrollment[2]+"-"+enrollment[1]+"-"+enrollment[0];
         return res;
     }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public void setLast_name(String last_name) {
+        this.last_name = last_name;
+    }
+
+    public void setFirst_name(String first_name) {
+        this.first_name = first_name;
+    }
+
+    public void setHire_date(String hire_date) {
+        this.hire_date = hire_date;
+    }
+
+    public void setEnrollment_date(String enrollment_date) {
+        this.enrollment_date = enrollment_date;
+    }
+    
+    public String getName() {
+        return this.last_name + " " + this.first_name;
+    }
     
 }

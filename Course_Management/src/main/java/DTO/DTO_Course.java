@@ -13,6 +13,7 @@ public class DTO_Course {
     int COURSEID, DEPARTMENTID;
     String TITLE, CREDITS;
 
+
     public DTO_Course() {
     }
 

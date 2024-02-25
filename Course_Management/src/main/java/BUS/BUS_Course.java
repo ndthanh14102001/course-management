@@ -6,8 +6,10 @@ package BUS;
 
 import DAO.DAO_Course;
 import DTO.DTO_Course;
+
 import java.sql.SQLException;
 import java.util.ArrayList;
+
 import java.util.List;
 
 /**
@@ -42,5 +44,10 @@ public class BUS_Course {
     public int Delete_course(String course_id) throws SQLException {
         int result_course = dao__course.Delete_Course(course_id);
         return result_course;
+
+    }
+
+    public List<DTO_Course> getAll() {
+        return new DAO_Course().getAll();
     }
 }

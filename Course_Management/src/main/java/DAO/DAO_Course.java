@@ -5,11 +5,20 @@
 package DAO;
 
 import DTO.DTO_Course;
+
 import Services.ConnectDB;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+
+import DTO.DTO_OnlineCourse;
+import Services.ConnectDB;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
@@ -18,12 +27,12 @@ import java.util.ArrayList;
 public class DAO_Course extends ConnectDB {
 
     public DAO_Course() {
-        DAO_Course.connectDB();
+        ConnectDB.connectDB();
     }
 
     public ArrayList ReadCourse() throws SQLException {
         String query_course = "SELECT * FrOM COURSE";
-        ResultSet rs_course = DAO_Course.doReadQuery(query_course);
+        ResultSet rs_course = ConnectDB.doReadQuery(query_course);
         ArrayList list_course = new ArrayList();
         if (rs_course != null) {
             int i = 1;
@@ -41,7 +50,7 @@ public class DAO_Course extends ConnectDB {
 
     public ArrayList ReadDEPARTMENTID_course() throws SQLException {
         String query_course = "SELECT DEPARTMENTID FROM Department";
-        ResultSet rs_course = DAO_Course.doReadQuery(query_course);
+        ResultSet rs_course = ConnectDB.doReadQuery(query_course);
         ArrayList listdepartmentID_course = new ArrayList();
         if (rs_course != null) {
             int i = 1;
@@ -55,7 +64,7 @@ public class DAO_Course extends ConnectDB {
 
     public int Add_Course(DTO_Course dto__course) throws SQLException {
         String query_course = "Insert COURSE ( TITLE,CREDITS,DEPARTMENTID ) VALUES (?, ?, ?)";
-        PreparedStatement p_course = DAO_Course.getConnection().prepareStatement(query_course);
+        PreparedStatement p_course = ConnectDB.getConnection().prepareStatement(query_course);
         p_course.setString(1, dto__course.getTITLE());
         p_course.setString(2, dto__course.getCREDITS());
         p_course.setInt(3, dto__course.getDEPARTMENTID());
@@ -66,7 +75,7 @@ public class DAO_Course extends ConnectDB {
 
     public int Edit_Course(DTO_Course dto__Course) throws SQLException {
         String query_course = "UPDATE COURSE SET TITLE = ? ,CREDITS = ? , DEPARTMENTID = ? WHERE COURSEID = ?";
-        PreparedStatement p_course = DAO_Course.getConnection().prepareStatement(query_course);
+        PreparedStatement p_course = ConnectDB.getConnection().prepareStatement(query_course);
         p_course.setString(1, dto__Course.getTITLE());
         p_course.setString(2, dto__Course.getCREDITS());
         p_course.setInt(3, dto__Course.getDEPARTMENTID());
@@ -77,10 +86,31 @@ public class DAO_Course extends ConnectDB {
 
     public int Delete_Course(String course_id) throws SQLException {
         String query_course = "DELETE FROM COURSE WHERE COURSEID = ?";
-        PreparedStatement p_course = DAO_Course.getConnection().prepareStatement(query_course);
+        PreparedStatement p_course = ConnectDB.getConnection().prepareStatement(query_course);
         p_course.setString(1, course_id);
         int result = p_course.executeUpdate();
         return result;
     }
 
+    public List<DTO_Course> getAll() {
+        String query = "SELECT * FROM `course`";
+        ResultSet rs = DAO_Department.doReadQuery(query);
+        ArrayList<DTO_Course> courses = new ArrayList<DTO_Course>();
+
+        try {
+            if (rs != null) {
+
+                while (rs.next()) {
+                    DTO_Course course = new DTO_Course();
+                    course.setCOURSEID(rs.getInt("COURSEID"));
+                    course.setTITLE(rs.getString("TITLE"));
+                    course.setCREDITS(rs.getString("CREDITS"));
+                    course.setDEPARTMENTID(rs.getInt("DEPARTMENTID"));
+                    courses.add(course);
+                }
+            }
+        } catch (Exception e) {
+        }
+        return courses;
+    }
 }
