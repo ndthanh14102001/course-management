@@ -8,50 +8,59 @@ package DTO;
  *
  * @author Duc Anh
  */
-public class DTO_StudentGrade {
-    String ENROLLMENTID, COURSEID, STUDENTID;
-    int GRADE;
+public class DTO_StudentGrade extends DTO_Person {
 
-    public DTO_StudentGrade() {
-    }
+    int ENROLLMENTID, STUDENTID, GRADE, COURSEID;
 
-    public DTO_StudentGrade(String ENROLLMENTID, String COURSEID, String STUDENTID, int GRADE) {
+    public DTO_StudentGrade(int ENROLLMENTID, int STUDENTID, int GRADE, int id, String last_name, String first_name, String hire_date, String enrollment_date) {
+        super(id, last_name, first_name, hire_date, enrollment_date);
         this.ENROLLMENTID = ENROLLMENTID;
-        this.COURSEID = COURSEID;
         this.STUDENTID = STUDENTID;
         this.GRADE = GRADE;
     }
 
-    public String getENROLLMENTID() {
+    public DTO_StudentGrade(int ENROLLMENTID, int STUDENTID, int GRADE, String last_name, String first_name, String hire_date, String enrollment_date) {
+        super(last_name, first_name, hire_date, enrollment_date);
+        this.ENROLLMENTID = ENROLLMENTID;
+        this.STUDENTID = STUDENTID;
+        this.GRADE = GRADE;
+    }
+
+    public DTO_StudentGrade() {
+        super(null, null, null, null);
+    }
+
+    public int getENROLLMENTID() {
         return ENROLLMENTID;
     }
 
-    public void setENROLLMENTID(String ENROLLMENTID) {
-        this.ENROLLMENTID = ENROLLMENTID;
-    }
-
-    public String getCOURSEID() {
-        return COURSEID;
-    }
-
-    public void setCOURSEID(String COURSEID) {
-        this.COURSEID = COURSEID;
-    }
-
-    public String getSTUDENTID() {
+    public int getSTUDENTID() {
         return STUDENTID;
-    }
-
-    public void setSTUDENTID(String STUDENTID) {
-        this.STUDENTID = STUDENTID;
     }
 
     public int getGRADE() {
         return GRADE;
     }
 
+    public int getCOURSEID() {
+        return COURSEID;
+    }
+
+    public void setCOURSEID(int COURSEID) {
+        this.COURSEID = COURSEID;
+    }
+
+    public void setENROLLMENTID(int ENROLLMENTID) {
+        this.ENROLLMENTID = ENROLLMENTID;
+    }
+
+    public void setSTUDENTID(int STUDENTID) {
+        this.STUDENTID = STUDENTID;
+    }
+
     public void setGRADE(int GRADE) {
         this.GRADE = GRADE;
     }
-    
+
+
 }

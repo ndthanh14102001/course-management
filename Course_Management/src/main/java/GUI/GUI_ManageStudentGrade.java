@@ -4,13 +4,27 @@
  */
 package GUI;
 
+import BUS.BUS_Course;
+import BUS.BUS_StudentGrade;
+import DAO.DAO_Course;
+import DAO.DAO_StudentGrade;
+import DTO.DTO_Course;
+import DTO.DTO_StudentGrade;
+import java.awt.event.KeyEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
+import javax.swing.event.CellEditorListener;
+import javax.swing.event.ChangeEvent;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -18,17 +32,26 @@ import javax.swing.JOptionPane;
  */
 public class GUI_ManageStudentGrade extends javax.swing.JFrame {
 
+    private int GRADE_COLUMN_POSITION = 3;
+    private static int pos = 0;
+    public DAO_StudentGrade daoStudentGrade = new DAO_StudentGrade();
+    public DTO_StudentGrade dtoStudentGrade = new DTO_StudentGrade();
+    public BUS_StudentGrade busStudentGrade = new BUS_StudentGrade();
+    private List<DTO_Course> courses;
+    private List<DTO_StudentGrade> students;
+
     /**
      * Creates new form ManageDepartment
      */
     public GUI_ManageStudentGrade() {
         initComponents();
-                
-//        try {
-//            listStudentGrade();
-//        } catch (SQLException ex) {
-//            Logger.getLogger(GUI_ManageStudentGrade.class.getName()).log(Level.SEVERE, null, ex);
-//        }
+
+        try {
+            showCoursesInCombobox();
+            addEventEditGrade();
+        } catch (SQLException ex) {
+            Logger.getLogger(GUI_ManageStudentGrade.class.getName()).log(Level.SEVERE, null, ex);
+        }
 
         setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
         addWindowListener(new WindowAdapter() {
@@ -54,6 +77,77 @@ public class GUI_ManageStudentGrade extends javax.swing.JFrame {
         });
     }
 
+    void showStudentGrade() {
+        try {
+            BUS_StudentGrade busStudentGrade = new BUS_StudentGrade();
+            this.students = busStudentGrade.getRegistedStudents(getSelectedCourseId());
+            DefaultTableModel model = convertStudentGrade(this.students);
+            DataTable.setModel(model);
+            status_stdgrade.setText("Num Of Students: " + this.students.size());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    private int getSelectedCourseId() {
+        if (this.courses != null && !this.courses.isEmpty()) {
+            return this.courses.get(jComboBox1_courseid_stdgrate.getSelectedIndex()).getCOURSEID();
+        }
+        return 0;
+    }
+
+    private DefaultTableModel convertStudentGrade(List list) {
+        String[] columnNames = {"Student ID", "First name", "Last name", "Grade"};
+        Object[][] data = new Object[list.size()][4];
+        for (int i = 0; i < list.size(); i++) {
+            DTO_StudentGrade dtoStudentGrade = (DTO_StudentGrade) list.get(i);
+            data[i][0] = dtoStudentGrade.getId();
+            data[i][1] = dtoStudentGrade.getLast_name();
+            data[i][2] = dtoStudentGrade.getSTUDENTID();
+            data[i][GRADE_COLUMN_POSITION] = dtoStudentGrade.getGRADE();
+        }
+        DefaultTableModel model = new DefaultTableModel(data, columnNames) {
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                return column == GRADE_COLUMN_POSITION;
+            }
+        };
+        return model;
+    }
+
+    private void showCoursesInCombobox() throws SQLException {
+        DefaultComboBoxModel modelcomboBox_course = (DefaultComboBoxModel) jComboBox1_courseid_stdgrate.getModel();
+        modelcomboBox_course.removeAllElements();
+        courses = new BUS_Course().getAll();
+        for (DTO_Course course : courses) {
+            modelcomboBox_course.addElement(course.getTITLE());
+        }
+
+    }
+
+    public void addEventEditGrade() {
+        CellEditorListener ChangeNotification = new CellEditorListener() {
+            @Override
+            public void editingCanceled(ChangeEvent e) {
+                System.out.println("The user canceled editing.");
+            }
+
+            @Override
+            public void editingStopped(ChangeEvent e) {
+                int selectedRow = DataTable.getSelectedRow();
+
+                int enrollmentId = students.get(selectedRow).getENROLLMENTID();
+                int grade = Integer.parseInt(DataTable.getValueAt(selectedRow, GRADE_COLUMN_POSITION).toString());
+                try {
+                    new BUS_StudentGrade().updateGrade(enrollmentId, grade);
+                } catch (Exception ex) {
+                    ex.printStackTrace();
+                }
+            }
+        };
+        DataTable.getDefaultEditor(String.class).addCellEditorListener(ChangeNotification);
+    }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -66,25 +160,12 @@ public class GUI_ManageStudentGrade extends javax.swing.JFrame {
         PanelTitle = new javax.swing.JPanel();
         LabelTitle = new javax.swing.JLabel();
         PanelFunction = new javax.swing.JPanel();
-        LabelEnrollmentId = new javax.swing.JLabel();
-        TextFieldEnrollmentId = new javax.swing.JTextField();
-        TextFieldCourseId = new javax.swing.JTextField();
         LabelCourseId = new javax.swing.JLabel();
-        LabelGrade = new javax.swing.JLabel();
-        TextFieldStudentId = new javax.swing.JTextField();
-        TextFieldDepartmentId = new javax.swing.JTextField();
-        LabelStudentId = new javax.swing.JLabel();
-        ButtonEdit = new javax.swing.JButton();
-        ButtonAdd = new javax.swing.JButton();
-        ButtonDelete = new javax.swing.JButton();
-        ButtonSearch = new javax.swing.JButton();
-        ButtonQuit = new javax.swing.JButton();
-        ButtonRefresh = new javax.swing.JButton();
-        LabelSearch = new javax.swing.JLabel();
-        TextFieldSearch = new javax.swing.JTextField();
+        jComboBox1_courseid_stdgrate = new javax.swing.JComboBox<>();
         PanelTable = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         DataTable = new javax.swing.JTable();
+        status_stdgrade = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Manage Department");
@@ -103,7 +184,7 @@ public class GUI_ManageStudentGrade extends javax.swing.JFrame {
         PanelTitleLayout.setHorizontalGroup(
             PanelTitleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, PanelTitleLayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap(437, Short.MAX_VALUE)
                 .addComponent(LabelTitle)
                 .addGap(397, 397, 397))
         );
@@ -117,103 +198,14 @@ public class GUI_ManageStudentGrade extends javax.swing.JFrame {
 
         PanelFunction.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
 
-        LabelEnrollmentId.setFont(new java.awt.Font("Times New Roman", 1, 20)); // NOI18N
-        LabelEnrollmentId.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        LabelEnrollmentId.setText("Enrollment ID: ");
-
-        TextFieldEnrollmentId.setFont(new java.awt.Font("Times New Roman", 2, 24)); // NOI18N
-        TextFieldEnrollmentId.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        TextFieldEnrollmentId.setToolTipText("");
-        TextFieldEnrollmentId.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                TextFieldEnrollmentIdActionPerformed(evt);
-            }
-        });
-
-        TextFieldCourseId.setFont(new java.awt.Font("Times New Roman", 2, 24)); // NOI18N
-        TextFieldCourseId.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        TextFieldCourseId.setToolTipText("");
-        TextFieldCourseId.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                TextFieldCourseIdActionPerformed(evt);
-            }
-        });
-
         LabelCourseId.setFont(new java.awt.Font("Times New Roman", 1, 20)); // NOI18N
         LabelCourseId.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        LabelCourseId.setText("Course ID:");
+        LabelCourseId.setText("Course");
 
-        LabelGrade.setFont(new java.awt.Font("Times New Roman", 1, 20)); // NOI18N
-        LabelGrade.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        LabelGrade.setText("Grade:");
-        LabelGrade.setToolTipText("");
-
-        TextFieldStudentId.setFont(new java.awt.Font("Times New Roman", 2, 24)); // NOI18N
-        TextFieldStudentId.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        TextFieldStudentId.setToolTipText("");
-        TextFieldStudentId.addActionListener(new java.awt.event.ActionListener() {
+        jComboBox1_courseid_stdgrate.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        jComboBox1_courseid_stdgrate.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                TextFieldStudentIdActionPerformed(evt);
-            }
-        });
-
-        TextFieldDepartmentId.setFont(new java.awt.Font("Times New Roman", 2, 24)); // NOI18N
-        TextFieldDepartmentId.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        TextFieldDepartmentId.setToolTipText("");
-        TextFieldDepartmentId.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                TextFieldDepartmentIdActionPerformed(evt);
-            }
-        });
-
-        LabelStudentId.setFont(new java.awt.Font("Times New Roman", 1, 20)); // NOI18N
-        LabelStudentId.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        LabelStudentId.setText("Student ID:");
-
-        ButtonEdit.setFont(new java.awt.Font("Times New Roman", 1, 18)); // NOI18N
-        ButtonEdit.setText("Edit");
-
-        ButtonAdd.setFont(new java.awt.Font("Times New Roman", 1, 18)); // NOI18N
-        ButtonAdd.setText("Add");
-        ButtonAdd.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                ButtonAddActionPerformed(evt);
-            }
-        });
-
-        ButtonDelete.setFont(new java.awt.Font("Times New Roman", 1, 18)); // NOI18N
-        ButtonDelete.setText("Delete");
-        ButtonDelete.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                ButtonDeleteActionPerformed(evt);
-            }
-        });
-
-        ButtonSearch.setFont(new java.awt.Font("Times New Roman", 1, 18)); // NOI18N
-        ButtonSearch.setText("Search");
-
-        ButtonQuit.setFont(new java.awt.Font("Times New Roman", 1, 18)); // NOI18N
-        ButtonQuit.setText("Quit");
-        ButtonQuit.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                ButtonQuitActionPerformed(evt);
-            }
-        });
-
-        ButtonRefresh.setFont(new java.awt.Font("Times New Roman", 1, 18)); // NOI18N
-        ButtonRefresh.setText("Refresh");
-
-        LabelSearch.setFont(new java.awt.Font("Times New Roman", 1, 20)); // NOI18N
-        LabelSearch.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        LabelSearch.setText("Search:");
-        LabelSearch.setToolTipText("");
-
-        TextFieldSearch.setFont(new java.awt.Font("Times New Roman", 2, 24)); // NOI18N
-        TextFieldSearch.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        TextFieldSearch.setToolTipText("");
-        TextFieldSearch.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                TextFieldSearchActionPerformed(evt);
+                jComboBox1_courseid_stdgrateActionPerformed(evt);
             }
         });
 
@@ -223,96 +215,30 @@ public class GUI_ManageStudentGrade extends javax.swing.JFrame {
             PanelFunctionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(PanelFunctionLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(PanelFunctionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(LabelCourseId, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(LabelEnrollmentId, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(LabelCourseId, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(PanelFunctionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addComponent(TextFieldCourseId, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 250, Short.MAX_VALUE)
-                    .addComponent(TextFieldEnrollmentId, javax.swing.GroupLayout.Alignment.LEADING))
-                .addGroup(PanelFunctionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(PanelFunctionLayout.createSequentialGroup()
-                        .addGap(39, 39, 39)
-                        .addComponent(LabelSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(TextFieldSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(PanelFunctionLayout.createSequentialGroup()
-                        .addGroup(PanelFunctionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(PanelFunctionLayout.createSequentialGroup()
-                                .addGap(39, 39, 39)
-                                .addComponent(LabelStudentId, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(PanelFunctionLayout.createSequentialGroup()
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(LabelGrade, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(18, 18, 18)
-                        .addGroup(PanelFunctionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(TextFieldStudentId)
-                            .addComponent(TextFieldDepartmentId, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addGap(48, 48, 48)
-                .addGroup(PanelFunctionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(PanelFunctionLayout.createSequentialGroup()
-                        .addGroup(PanelFunctionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(ButtonDelete, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(ButtonSearch, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addGap(33, 33, 33))
-                    .addGroup(PanelFunctionLayout.createSequentialGroup()
-                        .addComponent(ButtonAdd, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                .addGroup(PanelFunctionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(ButtonQuit, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(ButtonEdit, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(ButtonRefresh, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(19, 19, 19))
+                .addComponent(jComboBox1_courseid_stdgrate, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         PanelFunctionLayout.setVerticalGroup(
             PanelFunctionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(PanelFunctionLayout.createSequentialGroup()
-                .addGap(25, 25, 25)
-                .addGroup(PanelFunctionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(PanelFunctionLayout.createSequentialGroup()
-                        .addGroup(PanelFunctionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(PanelFunctionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                .addComponent(LabelEnrollmentId, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(TextFieldEnrollmentId, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(PanelFunctionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                .addComponent(ButtonAdd, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(ButtonEdit, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(40, 40, 40)
-                        .addGroup(PanelFunctionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, PanelFunctionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                .addComponent(LabelCourseId, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(TextFieldCourseId, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(ButtonRefresh, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(ButtonDelete, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addGap(25, 25, 25)
-                        .addGroup(PanelFunctionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(PanelFunctionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                .addComponent(LabelSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(TextFieldSearch, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(PanelFunctionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                .addComponent(ButtonSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(ButtonQuit, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                    .addGroup(PanelFunctionLayout.createSequentialGroup()
-                        .addGroup(PanelFunctionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(LabelStudentId, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(TextFieldStudentId, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(40, 40, 40)
-                        .addGroup(PanelFunctionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(LabelGrade, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(TextFieldDepartmentId, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(23, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(PanelFunctionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(LabelCourseId, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jComboBox1_courseid_stdgrate, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
         );
 
         DataTable.setFont(new java.awt.Font("Times New Roman", 0, 24)); // NOI18N
         DataTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+                {},
+                {},
+                {},
+                {}
             },
             new String [] {
-                "Course ID", "Title", "Credits", "Department ID"
+
             }
         ));
         DataTable.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
@@ -330,23 +256,33 @@ public class GUI_ManageStudentGrade extends javax.swing.JFrame {
         );
         PanelTableLayout.setVerticalGroup(
             PanelTableLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(PanelTableLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jScrollPane1)
-                .addContainerGap())
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, PanelTableLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 382, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(211, 211, 211))
         );
+
+        status_stdgrade.setFont(new java.awt.Font("Times New Roman", 1, 18)); // NOI18N
+        status_stdgrade.setText("jLabel1");
+        status_stdgrade.setMaximumSize(new java.awt.Dimension(50, 21));
+        status_stdgrade.setMinimumSize(new java.awt.Dimension(50, 21));
+        status_stdgrade.setName(""); // NOI18N
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+            .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(PanelTable, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(PanelTitle, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(PanelFunction, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(PanelTitle, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
+            .addComponent(PanelFunction, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(14, 14, 14)
+                .addComponent(status_stdgrade, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -355,47 +291,85 @@ public class GUI_ManageStudentGrade extends javax.swing.JFrame {
                 .addComponent(PanelTitle, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(PanelFunction, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(PanelTable, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(PanelTable, javax.swing.GroupLayout.PREFERRED_SIZE, 396, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(status_stdgrade, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(11, 11, 11))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
-    private void TextFieldCourseIdActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TextFieldCourseIdActionPerformed
+    private void DataTableMouseClicked(java.awt.event.MouseEvent evt) {
         // TODO add your handling code here:
-    }//GEN-LAST:event_TextFieldCourseIdActionPerformed
+        pos = this.DataTable.getSelectedRow();
 
-    private void TextFieldDepartmentIdActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TextFieldDepartmentIdActionPerformed
+    }
+
+    private void DataTableKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_DataTableKeyPressed
         // TODO add your handling code here:
-    }//GEN-LAST:event_TextFieldDepartmentIdActionPerformed
+    }//GEN-LAST:event_DataTableKeyPressed
 
-    private void TextFieldStudentIdActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TextFieldStudentIdActionPerformed
+    private void jComboBox1_courseid_stdgrateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1_courseid_stdgrateActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_TextFieldStudentIdActionPerformed
+        showStudentGrade();
+    }//GEN-LAST:event_jComboBox1_courseid_stdgrateActionPerformed
 
-    private void ButtonDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ButtonDeleteActionPerformed
+    private void DataTableKeyReleased(java.awt.event.KeyEvent evt) {
         // TODO add your handling code here:
-    }//GEN-LAST:event_ButtonDeleteActionPerformed
 
-    private void TextFieldEnrollmentIdActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TextFieldEnrollmentIdActionPerformed
+    }
+
+    private void TextFieldSearchKeyPressed(java.awt.event.KeyEvent evt) {
+
+    }
+
+    private void TextFieldSearchMouseExited(java.awt.event.MouseEvent evt) {
         // TODO add your handling code here:
-    }//GEN-LAST:event_TextFieldEnrollmentIdActionPerformed
+//        try {
+//            
+//            String searchInput = TextFieldSearch.getText();
+//            if (searchInput.isBlank() == false) {
+//                List list = busDepartment.FindDepartment(searchInput);
+//                DefaultTableModel model = convertDepartment(list);
+//                DataTable.setModel(model);
+//                LabelStatus.setText("Num of rows: " + list.size());
+//            } else {
+//                JOptionPane.showMessageDialog(this, "Department is empty", "Message", JOptionPane.ERROR_MESSAGE);
+//            }
+//            
+//        } catch (SQLException ex) {
+//            Logger.getLogger(GUI_ManageDepartment.class.getName()).log(Level.SEVERE, null, ex);
+//        }
+    }
 
-    private void ButtonAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ButtonAddActionPerformed
+    private void TextFieldSearchMouseReleased(java.awt.event.MouseEvent evt) {
         // TODO add your handling code here:
-    }//GEN-LAST:event_ButtonAddActionPerformed
+    }
 
-    private void TextFieldSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TextFieldSearchActionPerformed
+    private void TextFieldSearchMouseEntered(java.awt.event.MouseEvent evt) {
         // TODO add your handling code here:
-    }//GEN-LAST:event_TextFieldSearchActionPerformed
 
-    private void ButtonQuitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ButtonQuitActionPerformed
-        String[] args = null;
-        dispose();
-        GUI_ChooseOption.main(args);
-    }//GEN-LAST:event_ButtonQuitActionPerformed
+    }
+
+    private void TextFieldSearchMousePressed(java.awt.event.MouseEvent evt) {
+        // TODO add your handling code here:
+//        try {
+//            
+//            String searchInput = TextFieldSearch.getText();
+//            if (searchInput.isBlank() == false) {
+//                List list = busDepartment.FindDepartment(searchInput);
+//                DefaultTableModel model = convertDepartment(list);
+//                DataTable.setModel(model);
+//                LabelStatus.setText("Num of rows: " + list.size());
+//            } else {
+//                JOptionPane.showMessageDialog(this, "Department is empty", "Message", JOptionPane.ERROR_MESSAGE);
+//            }
+//            
+//        } catch (SQLException ex) {
+//            Logger.getLogger(GUI_ManageDepartment.class.getName()).log(Level.SEVERE, null, ex);
+//        }
+    }
 
     /**
      * @param args the command line arguments
@@ -414,13 +388,13 @@ public class GUI_ManageStudentGrade extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(GUI_ManageStudentGrade.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(GUI_ManageDepartment.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(GUI_ManageStudentGrade.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(GUI_ManageDepartment.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(GUI_ManageStudentGrade.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(GUI_ManageDepartment.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(GUI_ManageStudentGrade.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(GUI_ManageDepartment.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 
@@ -433,27 +407,21 @@ public class GUI_ManageStudentGrade extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    public javax.swing.JButton ButtonAdd;
-    public javax.swing.JButton ButtonDelete;
-    public javax.swing.JButton ButtonEdit;
-    public javax.swing.JButton ButtonQuit;
-    public javax.swing.JButton ButtonRefresh;
-    public javax.swing.JButton ButtonSearch;
     public javax.swing.JTable DataTable;
     public javax.swing.JLabel LabelCourseId;
-    public javax.swing.JLabel LabelEnrollmentId;
-    public javax.swing.JLabel LabelGrade;
-    public javax.swing.JLabel LabelSearch;
-    public javax.swing.JLabel LabelStudentId;
     public javax.swing.JLabel LabelTitle;
     public javax.swing.JPanel PanelFunction;
     public javax.swing.JPanel PanelTable;
     public javax.swing.JPanel PanelTitle;
-    public javax.swing.JTextField TextFieldCourseId;
-    public javax.swing.JTextField TextFieldDepartmentId;
-    public javax.swing.JTextField TextFieldEnrollmentId;
-    public javax.swing.JTextField TextFieldSearch;
-    public javax.swing.JTextField TextFieldStudentId;
+    private javax.swing.JComboBox<String> jComboBox1_courseid_stdgrate;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JLabel status_stdgrade;
     // End of variables declaration//GEN-END:variables
+//
+//    private static class LabelStatus {
+//
+//        private static void setText(String string) {
+//            throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+//        }
+//    }
 }
