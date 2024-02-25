@@ -4,6 +4,9 @@
  */
 package DTO;
 
+import java.sql.Date;
+import java.text.SimpleDateFormat;
+
 /**
  *
  * @author Paul
@@ -11,12 +14,13 @@ package DTO;
 public class DTO_Person {
 
     private int id;
-    private String last_name, first_name, hire_date, enrollment_date;
+    private String last_name, first_name;
+    private Date hire_date, enrollment_date;
 
     public DTO_Person() {
     }
 
-    public DTO_Person(int id, String last_name, String first_name, String hire_date, String enrollment_date) {
+    public DTO_Person(int id, String last_name, String first_name, Date hire_date, Date enrollment_date) {
         this.id = id;
         this.last_name = last_name;
         this.first_name = first_name;
@@ -24,7 +28,7 @@ public class DTO_Person {
         this.enrollment_date = enrollment_date;
     }
 
-    public DTO_Person(String last_name, String first_name, String hire_date, String enrollment_date) {
+    public DTO_Person(String last_name, String first_name, Date hire_date, Date enrollment_date) {
         this.last_name = last_name;
         this.first_name = first_name;
         this.hire_date = hire_date;
@@ -43,16 +47,24 @@ public class DTO_Person {
         return first_name;
     }
 
-    public String getHire_date() {
-        String[] hire = hire_date.split("-", 0);
-        String res = hire[2] + "-" + hire[1] + "-" + hire[0];   //Chuyển về đúng định dạng
-        return res;
+    public Date getHire_date() {
+        return hire_date;
     }
 
-    public String getEnrollment_date() {
-        String[] enrollment = enrollment_date.split("-", 0);
-        String res = enrollment[2] + "-" + enrollment[1] + "-" + enrollment[0];
-        return res;
+    public Date getEnrollment_date() {
+        return enrollment_date;
+    }
+
+
+    public String getHireDateString() {
+        SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyy");
+        return sdf.format(hire_date);
+    }
+
+
+    public String getEnrollmentString() {
+        SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyy");
+        return sdf.format(enrollment_date);
     }
 
     public void setId(int id) {
@@ -67,11 +79,11 @@ public class DTO_Person {
         this.first_name = first_name;
     }
 
-    public void setHire_date(String hire_date) {
+    public void setHire_date(Date hire_date) {
         this.hire_date = hire_date;
     }
 
-    public void setEnrollment_date(String enrollment_date) {
+    public void setEnrollment_date(Date enrollment_date) {
         this.enrollment_date = enrollment_date;
     }
 

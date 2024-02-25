@@ -67,11 +67,10 @@ public class GUI_ChooseOption extends javax.swing.JFrame {
         ButtonChooseOptionCourseManagement = new javax.swing.JButton();
         ButtonChooseOptionDepartmentManagement = new javax.swing.JButton();
         ButtonChooseOptionOfficeAssignmentManagement = new javax.swing.JButton();
-        ButtonChooseOptionOnsiteCourseManagement = new javax.swing.JButton();
-        ButtonChooseOptionPersonManagement = new javax.swing.JButton();
+        btnInstructorManagement = new javax.swing.JButton();
         ButtonChooseOptionStudentGradeManagement = new javax.swing.JButton();
-        ButtonChooseOptionOnlineCourseManagement = new javax.swing.JButton();
         btnResigeterCourse = new javax.swing.JButton();
+        btnStudentManagement = new javax.swing.JButton();
 
         ButtonChooseOptionDepartmentManagement3.setFont(new java.awt.Font("Times New Roman", 1, 20)); // NOI18N
         ButtonChooseOptionDepartmentManagement3.setText("Department Management");
@@ -131,19 +130,11 @@ public class GUI_ChooseOption extends javax.swing.JFrame {
             }
         });
 
-        ButtonChooseOptionOnsiteCourseManagement.setFont(new java.awt.Font("Times New Roman", 1, 20)); // NOI18N
-        ButtonChooseOptionOnsiteCourseManagement.setText("Onsite Course ");
-        ButtonChooseOptionOnsiteCourseManagement.addActionListener(new java.awt.event.ActionListener() {
+        btnInstructorManagement.setFont(new java.awt.Font("Times New Roman", 1, 20)); // NOI18N
+        btnInstructorManagement.setText("Instructor");
+        btnInstructorManagement.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                ButtonChooseOptionOnsiteCourseManagementActionPerformed(evt);
-            }
-        });
-
-        ButtonChooseOptionPersonManagement.setFont(new java.awt.Font("Times New Roman", 1, 20)); // NOI18N
-        ButtonChooseOptionPersonManagement.setText("Person");
-        ButtonChooseOptionPersonManagement.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                ButtonChooseOptionPersonManagementActionPerformed(evt);
+                btnInstructorManagementActionPerformed(evt);
             }
         });
 
@@ -155,19 +146,19 @@ public class GUI_ChooseOption extends javax.swing.JFrame {
             }
         });
 
-        ButtonChooseOptionOnlineCourseManagement.setFont(new java.awt.Font("Times New Roman", 1, 20)); // NOI18N
-        ButtonChooseOptionOnlineCourseManagement.setText("Online Course");
-        ButtonChooseOptionOnlineCourseManagement.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                ButtonChooseOptionOnlineCourseManagementActionPerformed(evt);
-            }
-        });
-
         btnResigeterCourse.setFont(new java.awt.Font("Times New Roman", 1, 20)); // NOI18N
         btnResigeterCourse.setText("Register Course");
         btnResigeterCourse.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnResigeterCourseActionPerformed(evt);
+            }
+        });
+
+        btnStudentManagement.setFont(new java.awt.Font("Times New Roman", 1, 20)); // NOI18N
+        btnStudentManagement.setText("Student");
+        btnStudentManagement.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnStudentManagementActionPerformed(evt);
             }
         });
 
@@ -177,22 +168,30 @@ public class GUI_ChooseOption extends javax.swing.JFrame {
             PanelOptionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(PanelOptionLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(PanelOptionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addComponent(ButtonChooseOptionPersonManagement, javax.swing.GroupLayout.DEFAULT_SIZE, 206, Short.MAX_VALUE)
-                    .addComponent(ButtonChooseOptionOfficeAssignmentManagement, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 206, Short.MAX_VALUE)
-                    .addComponent(ButtonChooseOptionCourseManagement, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 93, Short.MAX_VALUE)
-                .addGroup(PanelOptionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(ButtonChooseOptionCourseInstructorManagement, javax.swing.GroupLayout.DEFAULT_SIZE, 212, Short.MAX_VALUE)
-                    .addComponent(ButtonChooseOptionStudentGradeManagement, javax.swing.GroupLayout.DEFAULT_SIZE, 212, Short.MAX_VALUE)
-                    .addComponent(ButtonChooseOptionOnlineCourseManagement, javax.swing.GroupLayout.DEFAULT_SIZE, 212, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 93, Short.MAX_VALUE)
-                .addGroup(PanelOptionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(ButtonChooseOptionDepartmentManagement, javax.swing.GroupLayout.DEFAULT_SIZE, 215, Short.MAX_VALUE)
-                    .addComponent(ButtonChooseOptionOnsiteCourseManagement, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnResigeterCourse, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap())
+                .addGroup(PanelOptionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(PanelOptionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addComponent(btnInstructorManagement, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnStudentManagement, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(ButtonChooseOptionCourseManagement, javax.swing.GroupLayout.PREFERRED_SIZE, 154, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(81, 81, 81)
+                .addGroup(PanelOptionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(PanelOptionLayout.createSequentialGroup()
+                        .addGroup(PanelOptionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(ButtonChooseOptionCourseInstructorManagement, javax.swing.GroupLayout.PREFERRED_SIZE, 212, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(ButtonChooseOptionDepartmentManagement, javax.swing.GroupLayout.PREFERRED_SIZE, 215, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 63, Short.MAX_VALUE)
+                        .addGroup(PanelOptionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(ButtonChooseOptionOfficeAssignmentManagement, javax.swing.GroupLayout.PREFERRED_SIZE, 213, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(PanelOptionLayout.createSequentialGroup()
+                                .addComponent(btnResigeterCourse, javax.swing.GroupLayout.PREFERRED_SIZE, 215, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(36, 36, 36))))
+                    .addGroup(PanelOptionLayout.createSequentialGroup()
+                        .addComponent(ButtonChooseOptionStudentGradeManagement, javax.swing.GroupLayout.PREFERRED_SIZE, 212, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE))))
         );
+
+        PanelOptionLayout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {ButtonChooseOptionCourseInstructorManagement, ButtonChooseOptionCourseManagement, ButtonChooseOptionDepartmentManagement, ButtonChooseOptionOfficeAssignmentManagement, ButtonChooseOptionStudentGradeManagement, btnInstructorManagement, btnResigeterCourse, btnStudentManagement});
+
         PanelOptionLayout.setVerticalGroup(
             PanelOptionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(PanelOptionLayout.createSequentialGroup()
@@ -201,17 +200,16 @@ public class GUI_ChooseOption extends javax.swing.JFrame {
                     .addComponent(ButtonChooseOptionCourseManagement, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(ButtonChooseOptionCourseInstructorManagement, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnResigeterCourse, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(51, 51, 51)
+                .addGap(48, 48, 48)
                 .addGroup(PanelOptionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(ButtonChooseOptionOfficeAssignmentManagement, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(ButtonChooseOptionOnlineCourseManagement, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(ButtonChooseOptionOnsiteCourseManagement, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(50, 50, 50)
-                .addGroup(PanelOptionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(ButtonChooseOptionPersonManagement, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(ButtonChooseOptionStudentGradeManagement, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnInstructorManagement, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(ButtonChooseOptionDepartmentManagement, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(34, Short.MAX_VALUE))
+                .addGap(45, 45, 45)
+                .addGroup(PanelOptionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(ButtonChooseOptionStudentGradeManagement, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnStudentManagement, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(41, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -231,8 +229,8 @@ public class GUI_ChooseOption extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(PanelTitle, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(PanelOption, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
+                .addComponent(PanelOption, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
@@ -262,11 +260,11 @@ public class GUI_ChooseOption extends javax.swing.JFrame {
         GUI_OfficeAssignment.main(args);
     }//GEN-LAST:event_ButtonChooseOptionOfficeAssignmentManagementActionPerformed
 
-    private void ButtonChooseOptionPersonManagementActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ButtonChooseOptionPersonManagementActionPerformed
+    private void btnInstructorManagementActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInstructorManagementActionPerformed
         // TODO add your handling code here:
         this.dispose();
-        GUI_Person.main(args);
-    }//GEN-LAST:event_ButtonChooseOptionPersonManagementActionPerformed
+        GUI_Instructor.main(args);
+    }//GEN-LAST:event_btnInstructorManagementActionPerformed
 
     private void ButtonChooseOptionStudentGradeManagementActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ButtonChooseOptionStudentGradeManagementActionPerformed
         // TODO add your handling code here:
@@ -280,17 +278,11 @@ public class GUI_ChooseOption extends javax.swing.JFrame {
         GUI_RegisterCourse.main(args);
     }//GEN-LAST:event_btnResigeterCourseActionPerformed
 
-    private void ButtonChooseOptionOnlineCourseManagementActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ButtonChooseOptionOnlineCourseManagementActionPerformed
+    private void btnStudentManagementActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnStudentManagementActionPerformed
         // TODO add your handling code here:
         this.dispose();
-        GUI_OnlineCourse.main(args);
-    }//GEN-LAST:event_ButtonChooseOptionOnlineCourseManagementActionPerformed
-
-    private void ButtonChooseOptionOnsiteCourseManagementActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ButtonChooseOptionOnsiteCourseManagementActionPerformed
-        // TODO add your handling code here:
-        this.dispose();
-        GUI_OnsiteCourse.main(args);
-    }//GEN-LAST:event_ButtonChooseOptionOnsiteCourseManagementActionPerformed
+        GUI_StudentManagement.main(args);
+    }//GEN-LAST:event_btnStudentManagementActionPerformed
 
     /**
      * @param args the command line arguments
@@ -333,13 +325,12 @@ public class GUI_ChooseOption extends javax.swing.JFrame {
     public javax.swing.JButton ButtonChooseOptionDepartmentManagement;
     public javax.swing.JButton ButtonChooseOptionDepartmentManagement3;
     public javax.swing.JButton ButtonChooseOptionOfficeAssignmentManagement;
-    public javax.swing.JButton ButtonChooseOptionOnlineCourseManagement;
-    public javax.swing.JButton ButtonChooseOptionOnsiteCourseManagement;
-    public javax.swing.JButton ButtonChooseOptionPersonManagement;
     public javax.swing.JButton ButtonChooseOptionStudentGradeManagement;
     public javax.swing.JLabel LabelTitle;
     public javax.swing.JPanel PanelOption;
     public javax.swing.JPanel PanelTitle;
+    public javax.swing.JButton btnInstructorManagement;
     public javax.swing.JButton btnResigeterCourse;
+    public javax.swing.JButton btnStudentManagement;
     // End of variables declaration//GEN-END:variables
 }

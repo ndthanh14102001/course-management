@@ -4,6 +4,8 @@
  */
 package DTO;
 
+import java.sql.Date;
+
 /**
  *
  * @author Duc Anh
@@ -12,14 +14,14 @@ public class DTO_StudentGrade extends DTO_Person {
 
     int ENROLLMENTID, STUDENTID, GRADE, COURSEID;
 
-    public DTO_StudentGrade(int ENROLLMENTID, int STUDENTID, int GRADE, int id, String last_name, String first_name, String hire_date, String enrollment_date) {
+    public DTO_StudentGrade(int ENROLLMENTID, int STUDENTID, int GRADE, int id, String last_name, String first_name, Date hire_date, Date enrollment_date) {
         super(id, last_name, first_name, hire_date, enrollment_date);
         this.ENROLLMENTID = ENROLLMENTID;
         this.STUDENTID = STUDENTID;
         this.GRADE = GRADE;
     }
 
-    public DTO_StudentGrade(int ENROLLMENTID, int STUDENTID, int GRADE, String last_name, String first_name, String hire_date, String enrollment_date) {
+    public DTO_StudentGrade(int ENROLLMENTID, int STUDENTID, int GRADE, String last_name, String first_name, Date hire_date, Date enrollment_date) {
         super(last_name, first_name, hire_date, enrollment_date);
         this.ENROLLMENTID = ENROLLMENTID;
         this.STUDENTID = STUDENTID;

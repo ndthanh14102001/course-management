@@ -83,7 +83,7 @@ public class DAO_OfficeAssignment {
                     + " AND `person`.`PERSONID` NOT IN "
                     + "(SELECT `officeassignment`.`INSTRUCTOR` FROM `officeassignment`)");
             while (rs.next()) {
-                DTO_Person p = new DTO_Person(rs.getInt("PERSONID"), rs.getString("LASTNAME"), rs.getString("FIRSTNAME"), rs.getString("HIREDATE"), rs.getString("ENROLLMENTDATE"));
+                DTO_Person p = new DTO_Person(rs.getInt("PERSONID"), rs.getString("LASTNAME"), rs.getString("FIRSTNAME"), rs.getDate("HIREDATE"), rs.getDate("ENROLLMENTDATE"));
                 persons.add(p);
             }
         } catch (Exception e) {

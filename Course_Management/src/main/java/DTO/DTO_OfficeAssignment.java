@@ -21,13 +21,13 @@ public class DTO_OfficeAssignment extends DTO_Person {
         super(null, null, null, null);
     }
 
-    public DTO_OfficeAssignment(String LOCATION, Date TIMESTAMP, int id, String last_name, String first_name, String hire_date, String enrollment_date) {
+    public DTO_OfficeAssignment(String LOCATION, Date TIMESTAMP, int id, String last_name, String first_name, Date hire_date, Date enrollment_date) {
         super(id, last_name, first_name, hire_date, enrollment_date);
         this.LOCATION = LOCATION;
         this.TIMESTAMP = TIMESTAMP;
     }
 
-    public DTO_OfficeAssignment(String LOCATION, Date TIMESTAMP, String last_name, String first_name, String hire_date, String enrollment_date) {
+    public DTO_OfficeAssignment(String LOCATION, Date TIMESTAMP, String last_name, String first_name, Date hire_date, Date enrollment_date) {
         super(last_name, first_name, hire_date, enrollment_date);
         this.LOCATION = LOCATION;
         this.TIMESTAMP = TIMESTAMP;
