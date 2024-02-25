@@ -85,14 +85,18 @@ public class GUI_Course extends javax.swing.JFrame {
     }
 
     private DefaultTableModel convertCourse(List list_course) {
-        String[] columnNames_course = {"Course ID", "Title", "Credits", "Department"};
-        Object[][] data_course = new Object[list_course.size()][4];
+        String[] columnNames_course = {"Course ID", "Title", "Credits", "Department", "URL", "Location", "Date", "Time"};
+        Object[][] data_course = new Object[list_course.size()][columnNames_course.length];
         for (int i = 0; i < list_course.size(); i++) {
             DTO_Course dto__course = (DTO_Course) list_course.get(i);
             data_course[i][0] = dto__course.getCOURSEID();
             data_course[i][1] = dto__course.getTITLE();
             data_course[i][2] = dto__course.getCREDITS();
             data_course[i][3] = dto__course.getDepartment().getNAME();
+            data_course[i][4] = dto__course.getURL();
+            data_course[i][5] = dto__course.getLOCATION();
+            data_course[i][6] = dto__course.getDate();
+            data_course[i][7] = dto__course.getTime();
         }
         DefaultTableModel model_course = new DefaultTableModel(data_course, columnNames_course);
         return model_course;
@@ -488,21 +492,8 @@ public class GUI_Course extends javax.swing.JFrame {
     private void ButtonAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ButtonAddActionPerformed
         // TODO add your handling code here:
 
-        try {
-            dto__course.setTITLE(TextFieldTitle_course.getText());
-            dto__course.setCREDITS(TextFieldCredits_course.getText());
-
-            dto__course.setDEPARTMENTID((Integer) jComboBox_course.getSelectedItem());
-            if (bus__course.Add_course(dto__course) > 0) {
-                NullView_course();
-                JOptionPane.showMessageDialog(this, "Complete Add Course", "Message", JOptionPane.INFORMATION_MESSAGE);
-
-                listCourse();
-            }
-        } catch (Exception ex) {
-            JOptionPane.showMessageDialog(this, "Error Add Course", "Message", JOptionPane.ERROR_MESSAGE);
-            Logger.getLogger(GUI_Course.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        GUI_AddOnsiteCourse.main(null);
+        this.dispose();
     }//GEN-LAST:event_ButtonAddActionPerformed
 
     private void ButtonQuitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ButtonQuitActionPerformed
@@ -543,31 +534,9 @@ public class GUI_Course extends javax.swing.JFrame {
     private void ButtonEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ButtonEditActionPerformed
         // TODO add your handling code here:
         try {
-            dto__course.setCOURSEID(Integer.parseInt(TextFieldCourseId_course.getText()));
-            String Title_course = TextFieldTitle_course.getText();
-            dto__course.setTITLE(Title_course);
-            String Credits_course = TextFieldCredits_course.getText();
-            dto__course.setCREDITS(Credits_course);
-
-            // Kiểm tra kiểu dữ liệu của đối tượng trong JComboBox
-            Object selectedItem = jComboBox_course.getSelectedItem();
-            if (selectedItem instanceof Integer) {
-                int departmentID = (int) selectedItem;
-                dto__course.setDEPARTMENTID(departmentID);
-            }
-
-            if (Title_course.isEmpty() || Credits_course.isEmpty()) {
-                JOptionPane.showMessageDialog(this, "Error: Title and Credits cannot be empty", "Message", JOptionPane.ERROR_MESSAGE);
-                return; // Return early if validation fails
-            }
-
-            int editResult = bus__course.Edit_course(dto__course);
-            if (editResult > 0) {
-
-                JOptionPane.showConfirmDialog(this, "Complete Edit Course", "Message", JOptionPane.INFORMATION_MESSAGE);
-                listCourse();
-                NullView_course();
-            }
+            DTO_Course course = this.courses.get(DataTable_Course.getSelectedRow());
+            GUI_UpdateOnsiteCourse.main(course);
+            this.dispose();
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(this, "Error Edit Course", "Message", JOptionPane.ERROR_MESSAGE);
             Logger.getLogger(GUI_Course.class.getName()).log(Level.SEVERE, null, ex);

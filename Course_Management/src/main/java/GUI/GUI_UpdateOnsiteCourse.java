@@ -5,9 +5,12 @@
 package GUI;
 
 import BUS.BUS_Course;
+import BUS.BUS_Department;
 import DTO.DTO_Course;
+import DTO.DTO_Department;
 import java.sql.Date;
 import java.sql.Time;
+import java.util.List;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
@@ -17,11 +20,46 @@ import javax.swing.JOptionPane;
  */
 public class GUI_UpdateOnsiteCourse extends javax.swing.JFrame {
 
+    List<DTO_Department> departments;
+    DTO_Course course;
+
     /**
      * Creates new form GUI_UpdateOnsiteCourse
      */
-    public GUI_UpdateOnsiteCourse() {
+    public GUI_UpdateOnsiteCourse(DTO_Course course) {
         initComponents();
+        this.course = course;
+
+        initData();
+    }
+
+    void initData() {
+        txtTitle.setText(course.getTITLE());
+        txtCredits.setText(course.getCREDITS());
+        txtLocation.setText(course.getLOCATION());
+        labelCourseId.setText(String.valueOf(course.getCOURSEID()));
+        dateSelect.setDate(course.getDate());
+        spHour.setValue(course.getTime().getHours());
+        spMin.setValue(course.getTime().getMinutes());
+        showDepartmentsInCombobox();
+    }
+
+    public void showDepartmentsInCombobox() {
+        try {
+            this.departments = new BUS_Department().LoadDepartment(1);
+            int selectedDepartmentIndex = 0;
+            for (int i = 0; i < this.departments.size(); i++) {
+                DTO_Department department = this.departments.get(i);
+                cbDepartment.addItem(department.getNAME());
+                if (department.getID() == this.course.getDepartment().getID()) {
+                    selectedDepartmentIndex = i;
+                }
+
+            }
+            cbDepartment.setSelectedIndex(selectedDepartmentIndex);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     /**
@@ -54,7 +92,7 @@ public class GUI_UpdateOnsiteCourse extends javax.swing.JFrame {
         jLabel10 = new javax.swing.JLabel();
         labelCourseId = new javax.swing.JLabel();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         jButton2.setText("Cancel");
         jButton2.addActionListener(new java.awt.event.ActionListener() {
@@ -127,8 +165,8 @@ public class GUI_UpdateOnsiteCourse extends javax.swing.JFrame {
                             .addComponent(cbDepartment, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addGroup(layout.createSequentialGroup()
                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                 .addComponent(txtCredits, javax.swing.GroupLayout.PREFERRED_SIZE, 233, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -160,7 +198,7 @@ public class GUI_UpdateOnsiteCourse extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGap(18, 18, 18)
                         .addComponent(jLabel2))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(txtTitle, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -221,9 +259,9 @@ public class GUI_UpdateOnsiteCourse extends javax.swing.JFrame {
             new BUS_Course().addOnsiteCourse(course);
             JFrame frame = new JFrame("JOptionPane showMessageDialog example");
             JOptionPane.showMessageDialog(frame,
-                "Update online course successfully",
-                "Success",
-                JOptionPane.INFORMATION_MESSAGE);
+                    "Update online course successfully",
+                    "Success",
+                    JOptionPane.INFORMATION_MESSAGE);
             txtTitle.setText("");
             txtCredits.setText("");
             txtLocation.setText("");
@@ -234,16 +272,16 @@ public class GUI_UpdateOnsiteCourse extends javax.swing.JFrame {
             e.printStackTrace();
             JFrame frame = new JFrame("JOptionPane showMessageDialog example");
             JOptionPane.showMessageDialog(frame,
-                "Update online course fail",
-                "Error",
-                JOptionPane.ERROR_MESSAGE);
+                    "Update online course fail",
+                    "Error",
+                    JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
      * @param args the command line arguments
      */
-    public static void main(String args[]) {
+    public static void main(DTO_Course course) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
@@ -270,7 +308,7 @@ public class GUI_UpdateOnsiteCourse extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new GUI_UpdateOnsiteCourse().setVisible(true);
+                new GUI_UpdateOnsiteCourse(course).setVisible(true);
             }
         });
     }

@@ -99,6 +99,7 @@ public class DAO_Course extends ConnectDB {
                 + "course.TITLE, \n"
                 + "course.CREDITS,\n"
                 + "department.NAME as DEPARTMENTNAME,\n"
+                + "department.DEPARTMENTID,\n"
                 + "NULL as URL,\n"
                 + "onsitecourse.LOCATION,\n"
                 + "onsitecourse.DATES,\n"
@@ -111,6 +112,7 @@ public class DAO_Course extends ConnectDB {
                 + "course.TITLE, \n"
                 + "course.CREDITS,\n"
                 + "department.NAME,\n"
+                + "department.DEPARTMENTID,\n"
                 + "onlinecourse.URL as URL,\n"
                 + "NULL,\n"
                 + "NULL,\n"
@@ -128,11 +130,15 @@ public class DAO_Course extends ConnectDB {
                     DTO_Course course = new DTO_Course();
                     DTO_Department department = new DTO_Department();
                     department.setNAME(rs.getString("DEPARTMENTNAME"));
+                    department.setID(rs.getInt("DEPARTMENTID"));
                     course.setDepartment(department);
                     course.setCOURSEID(rs.getInt("COURSEID"));
                     course.setTITLE(rs.getString("TITLE"));
                     course.setCREDITS(rs.getString("CREDITS"));
-
+                    course.setURL(rs.getString("URL"));
+                    course.setLOCATION(rs.getString("LOCATION"));
+                    course.setTime(rs.getTime("TIMES"));
+                    course.setDate(rs.getDate("DATES"));
                     courses.add(course);
                 }
             }

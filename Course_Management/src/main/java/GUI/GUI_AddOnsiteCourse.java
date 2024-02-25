@@ -70,7 +70,7 @@ public class GUI_AddOnsiteCourse extends javax.swing.JFrame {
         spMin = new javax.swing.JSpinner();
         cbDepartment = new javax.swing.JComboBox<>();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         jLabel1.setText("Title");
 
