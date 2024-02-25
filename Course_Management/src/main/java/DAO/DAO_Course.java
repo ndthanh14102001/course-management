@@ -66,6 +66,17 @@ public class DAO_Course extends ConnectDB {
         p_course.execute();
     }
 
+    public void Update_OnsiteCourse(DTO_Course dto__course) throws SQLException {
+        String query_course = "Update ONSITECOURSE SET LOCATION = ? , DATES = ?, TIMES = ? WHERE COURSEID = ?";
+        PreparedStatement p_course = ConnectDB.getConnection().prepareStatement(query_course);
+        p_course.setString(1, dto__course.getLOCATION());
+        p_course.setDate(2, dto__course.getDate());
+        p_course.setTime(3, dto__course.getTime());
+        p_course.setInt(4, dto__course.getCOURSEID());
+        
+        p_course.execute();
+    }
+
     public int Add_OnlineCourse(DTO_Course dto__course) throws SQLException {
         String query_course = "Insert ONLINECOURSE ( URL ) VALUES (?)";
         PreparedStatement p_course = ConnectDB.getConnection().prepareStatement(query_course);
@@ -73,6 +84,15 @@ public class DAO_Course extends ConnectDB {
 
         int result = p_course.executeUpdate();
         return result;
+    }
+    
+     public void Update_OnlineCourse(DTO_Course dto__course) throws SQLException {
+        String query_course = "Update ONLINECOURSE SET URL = ?  WHERE COURSEID = ?";
+        PreparedStatement p_course = ConnectDB.getConnection().prepareStatement(query_course);
+        p_course.setString(1, dto__course.getURL());
+        p_course.setInt(2, dto__course.getCOURSEID());
+        
+        p_course.execute();
     }
 
     public int Edit_Course(DTO_Course dto__Course) throws SQLException {

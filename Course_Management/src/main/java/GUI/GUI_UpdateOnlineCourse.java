@@ -18,7 +18,7 @@ import javax.swing.JOptionPane;
  *
  * @author Admin
  */
-public class GUI_UpdateOnsiteCourse extends javax.swing.JFrame {
+public class GUI_UpdateOnlineCourse extends javax.swing.JFrame {
 
     List<DTO_Department> departments;
     DTO_Course course;
@@ -26,7 +26,7 @@ public class GUI_UpdateOnsiteCourse extends javax.swing.JFrame {
     /**
      * Creates new form GUI_UpdateOnsiteCourse
      */
-    public GUI_UpdateOnsiteCourse(DTO_Course course) {
+    public GUI_UpdateOnlineCourse(DTO_Course course) {
         initComponents();
         this.course = course;
 
@@ -36,11 +36,8 @@ public class GUI_UpdateOnsiteCourse extends javax.swing.JFrame {
     void initData() {
         txtTitle.setText(course.getTITLE());
         txtCredits.setText(course.getCREDITS());
-        txtLocation.setText(course.getLOCATION());
+        txtURL.setText(course.getURL());
         labelCourseId.setText(String.valueOf(course.getCOURSEID()));
-        dateSelect.setDate(course.getDate());
-        spHour.setValue(course.getTime().getHours());
-        spMin.setValue(course.getTime().getMinutes());
         showDepartmentsInCombobox();
     }
 
@@ -75,15 +72,8 @@ public class GUI_UpdateOnsiteCourse extends javax.swing.JFrame {
         txtCredits = new javax.swing.JTextField();
         jLabel7 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
-        dateSelect = new com.toedter.calendar.JDateChooser();
         jLabel4 = new javax.swing.JLabel();
-        jLabel8 = new javax.swing.JLabel();
-        txtLocation = new javax.swing.JTextField();
-        jLabel9 = new javax.swing.JLabel();
-        jLabel5 = new javax.swing.JLabel();
-        spHour = new javax.swing.JSpinner();
-        jLabel6 = new javax.swing.JLabel();
-        spMin = new javax.swing.JSpinner();
+        txtURL = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
         cbDepartment = new javax.swing.JComboBox<>();
         txtTitle = new javax.swing.JTextField();
@@ -103,21 +93,11 @@ public class GUI_UpdateOnsiteCourse extends javax.swing.JFrame {
 
         jLabel7.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
         jLabel7.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel7.setText("UPDATE ONSITE COURSE");
+        jLabel7.setText("UPDATE ONLINE COURSE");
 
         jLabel3.setText("Department");
 
-        dateSelect.setMinSelectableDate(new java.util.Date(-62135791093000L));
-
-        jLabel4.setText("Location");
-
-        jLabel8.setText("Hour");
-
-        jLabel9.setText("Min");
-
-        jLabel5.setText("Date");
-
-        jLabel6.setText("Time");
+        jLabel4.setText("URL");
 
         jLabel1.setText("Title");
 
@@ -152,13 +132,9 @@ public class GUI_UpdateOnsiteCourse extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                         .addGroup(layout.createSequentialGroup()
-                            .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                            .addComponent(dateSelect, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addGroup(layout.createSequentialGroup()
                             .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                            .addComponent(txtLocation, javax.swing.GroupLayout.PREFERRED_SIZE, 233, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(txtURL, javax.swing.GroupLayout.PREFERRED_SIZE, 233, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGroup(layout.createSequentialGroup()
                             .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -171,17 +147,7 @@ public class GUI_UpdateOnsiteCourse extends javax.swing.JFrame {
                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                 .addComponent(txtCredits, javax.swing.GroupLayout.PREFERRED_SIZE, 233, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addComponent(txtTitle, javax.swing.GroupLayout.PREFERRED_SIZE, 233, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(labelCourseId, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGroup(layout.createSequentialGroup()
-                            .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                            .addComponent(spHour, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGap(5, 5, 5)
-                            .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGap(18, 18, 18)
-                            .addComponent(spMin, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addComponent(labelCourseId, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE))))
                     .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(47, Short.MAX_VALUE))
         );
@@ -190,7 +156,7 @@ public class GUI_UpdateOnsiteCourse extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel7)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 24, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 36, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel10)
                     .addComponent(labelCourseId))
@@ -211,19 +177,8 @@ public class GUI_UpdateOnsiteCourse extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
-                    .addComponent(txtLocation, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel5)
-                    .addComponent(dateSelect, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel6)
-                    .addComponent(jLabel8)
-                    .addComponent(jLabel9)
-                    .addComponent(spHour, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(spMin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(36, 36, 36)
+                    .addComponent(txtURL, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(23, 23, 23)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton1)
                     .addComponent(jButton2))
@@ -242,26 +197,24 @@ public class GUI_UpdateOnsiteCourse extends javax.swing.JFrame {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
         String title = txtTitle.getText();
-        String location = txtLocation.getText();
+        String location = txtURL.getText();
         String credits = txtCredits.getText();
         int departmentId = this.departments.get(cbDepartment.getSelectedIndex()).getID();
-        Date date = new Date(dateSelect.getDate().getTime());
-        Time time = new Time((Integer) spHour.getValue(), (Integer) spMin.getValue(), 0);
+
         DTO_Course courseToUpdate = new DTO_Course();
         courseToUpdate.setTITLE(title);
-        courseToUpdate.setLOCATION(location);
+        courseToUpdate.setURL(location);
         courseToUpdate.setCREDITS(credits);
         courseToUpdate.setDEPARTMENTID(departmentId);
-        courseToUpdate.setDate(date);
-        courseToUpdate.setTime(time);
         courseToUpdate.setCOURSEID(this.course.getCOURSEID());
         try {
-            new BUS_Course().updateOnsiteCourse(courseToUpdate);
+            new BUS_Course().updateOnlineCourse(courseToUpdate);
             JFrame frame = new JFrame("JOptionPane showMessageDialog example");
             JOptionPane.showMessageDialog(frame,
                     "Update online course successfully",
                     "Success",
                     JOptionPane.INFORMATION_MESSAGE);
+
         } catch (Exception e) {
             e.printStackTrace();
             JFrame frame = new JFrame("JOptionPane showMessageDialog example");
@@ -289,27 +242,27 @@ public class GUI_UpdateOnsiteCourse extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(GUI_UpdateOnsiteCourse.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(GUI_UpdateOnlineCourse.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(GUI_UpdateOnsiteCourse.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(GUI_UpdateOnlineCourse.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(GUI_UpdateOnsiteCourse.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(GUI_UpdateOnlineCourse.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(GUI_UpdateOnsiteCourse.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(GUI_UpdateOnlineCourse.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new GUI_UpdateOnsiteCourse(course).setVisible(true);
+                new GUI_UpdateOnlineCourse(course).setVisible(true);
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JComboBox<String> cbDepartment;
-    private com.toedter.calendar.JDateChooser dateSelect;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
@@ -317,16 +270,10 @@ public class GUI_UpdateOnsiteCourse extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
-    private javax.swing.JLabel jLabel8;
-    private javax.swing.JLabel jLabel9;
     private javax.swing.JLabel labelCourseId;
-    private javax.swing.JSpinner spHour;
-    private javax.swing.JSpinner spMin;
     private javax.swing.JTextField txtCredits;
-    private javax.swing.JTextField txtLocation;
     private javax.swing.JTextField txtTitle;
+    private javax.swing.JTextField txtURL;
     // End of variables declaration//GEN-END:variables
 }

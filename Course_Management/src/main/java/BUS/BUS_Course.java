@@ -62,19 +62,27 @@ public class BUS_Course {
         return onlineCourses;
     }
 
-    public void addOnsiteCourse(DTO_Course course) throws SQLException{
+    public void addOnsiteCourse(DTO_Course course) throws SQLException {
         DAO_Course courseDAO = new DAO_Course();
         courseDAO.Add_Course(course);
         courseDAO.Add_OnsiteCourse(course);
     }
 
-    public void addOnlineCourse(DTO_Course course) {
+    public void updateOnsiteCourse(DTO_Course course) throws SQLException {
         DAO_Course courseDAO = new DAO_Course();
-        try {
-            courseDAO.Add_Course(course);
-            courseDAO.Add_OnlineCourse(course);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        courseDAO.Edit_Course(course);
+        courseDAO.Update_OnsiteCourse(course);
+    }
+
+    public void addOnlineCourse(DTO_Course course) throws SQLException {
+        DAO_Course courseDAO = new DAO_Course();
+        courseDAO.Add_Course(course);
+        courseDAO.Add_OnlineCourse(course);
+    }
+
+    public void updateOnlineCourse(DTO_Course course) throws SQLException {
+        DAO_Course courseDAO = new DAO_Course();
+        courseDAO.Edit_Course(course);
+        courseDAO.Update_OnlineCourse(course);
     }
 }

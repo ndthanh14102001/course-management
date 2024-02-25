@@ -20,6 +20,7 @@ public class DTO_Course {
     Date date;
     Time time;
     DTO_Department department;
+
     public DTO_Course() {
     }
 
@@ -74,6 +75,16 @@ public class DTO_Course {
         return date;
     }
 
+    public String getDateString() {
+        try {
+            SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyy");
+            return sdf.format(date);
+        } catch (Exception e) {
+            return "";
+        }
+    }
+
+    ;
     public Time getTime() {
         return time;
     }
