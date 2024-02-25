@@ -35,7 +35,7 @@ public class DAO_CourseInstructor {
 
             ResultSet rs = p.executeQuery();
             while (rs.next()) {
-                DTO_Person person = new DTO_Person(rs.getInt("PERSONID"), rs.getString("LASTNAME"), rs.getString("FIRSTNAME"), rs.getString("HIREDATE"), rs.getString("ENROLLMENTDATE"));
+                DTO_Person person = new DTO_Person(rs.getInt("PERSONID"), rs.getString("LASTNAME"), rs.getString("FIRSTNAME"), rs.getDate("HIREDATE"), rs.getDate("ENROLLMENTDATE"));
                 persons.add(person);
             }
         } catch (Exception e) {
@@ -47,7 +47,8 @@ public class DAO_CourseInstructor {
     public List<DTO_Person> GetUnassignedInstructorsByCourseId(int courseId) {
         String query = "SELECT * FROM `person` "
                 + "WHERE `person`.`PERSONID` NOT IN "
-                + "(SELECT `courseinstructor`.`PERSONID` FROM `courseinstructor` WHERE `courseinstructor`.`COURSEID` = ? ) ";
+                + "(SELECT `courseinstructor`.`PERSONID` FROM `courseinstructor` WHERE `courseinstructor`.`COURSEID` = ? ) "
+                + "AND HIREDATE IS NOT NULL ";
         ArrayList<DTO_Person> persons = new ArrayList<DTO_Person>();
         try {
             PreparedStatement p = ConnectDB.getConnection().prepareStatement(query);
@@ -55,7 +56,7 @@ public class DAO_CourseInstructor {
 
             ResultSet rs = p.executeQuery();
             while (rs.next()) {
-                DTO_Person person = new DTO_Person(rs.getInt("PERSONID"), rs.getString("LASTNAME"), rs.getString("FIRSTNAME"), rs.getString("HIREDATE"), rs.getString("ENROLLMENTDATE"));
+                DTO_Person person = new DTO_Person(rs.getInt("PERSONID"), rs.getString("LASTNAME"), rs.getString("FIRSTNAME"), rs.getDate("HIREDATE"), rs.getDate("ENROLLMENTDATE"));
                 persons.add(person);
             }
         } catch (Exception e) {

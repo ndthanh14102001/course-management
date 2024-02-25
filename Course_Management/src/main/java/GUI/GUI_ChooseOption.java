@@ -264,8 +264,8 @@ public class GUI_ChooseOption extends javax.swing.JFrame {
 
     private void ButtonChooseOptionPersonManagementActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ButtonChooseOptionPersonManagementActionPerformed
         // TODO add your handling code here:
-        this.dispose();
-        GUI_Person.main(args);
+//        this.dispose();
+//        GUI_Person.main(args);
     }//GEN-LAST:event_ButtonChooseOptionPersonManagementActionPerformed
 
     private void ButtonChooseOptionStudentGradeManagementActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ButtonChooseOptionStudentGradeManagementActionPerformed
