@@ -33,7 +33,6 @@ public class GUI_CourseInstructor extends javax.swing.JFrame {
     public GUI_CourseInstructor() {
         initComponents();
         showCoursesInCombobox();
-        
         setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
         addWindowListener(new WindowAdapter() {
             @Override
@@ -305,7 +304,7 @@ public class GUI_CourseInstructor extends javax.swing.JFrame {
                 showCurrentIntructorTable();
                 showOrtherIntructorTable();
             } catch (Exception e) {
-                 e.printStackTrace();
+                e.printStackTrace();
             }
         }
     }//GEN-LAST:event_btnRemoveAssignmentActionPerformed

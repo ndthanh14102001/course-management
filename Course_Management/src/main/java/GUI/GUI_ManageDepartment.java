@@ -98,7 +98,7 @@ public class GUI_ManageDepartment extends javax.swing.JFrame {
         DAO_Department department = new DAO_Department();
         ArrayList list = department.ReadDepartment();
         DTO_Department dtoDepartment = (DTO_Department) list.get(pos);
-        this.TextFieldId.setText(dtoDepartment.getID() + "");
+        this.LabelDepartmentID.setText(dtoDepartment.getID() + "");
         this.TextFieldName.setText(dtoDepartment.getNAME());
         this.TextFieldBudget.setText(Double.toString(dtoDepartment.getBUDGET()));
         this.TextFieldStartDate.setText(Date.format(dtoDepartment.getSTARTDATE()));
@@ -106,7 +106,7 @@ public class GUI_ManageDepartment extends javax.swing.JFrame {
     }
 
     public void NullView() throws SQLException {
-        this.TextFieldId.setText("");
+        this.LabelDepartmentID.setText("");
         this.TextFieldName.setText("");
         this.TextFieldBudget.setText("");
         this.TextFieldStartDate.setText("");
@@ -127,7 +127,6 @@ public class GUI_ManageDepartment extends javax.swing.JFrame {
         LabelTitle = new javax.swing.JLabel();
         PanelFunction = new javax.swing.JPanel();
         LabelDepartmentId = new javax.swing.JLabel();
-        TextFieldId = new javax.swing.JTextField();
         TextFieldName = new javax.swing.JTextField();
         LabelName = new javax.swing.JLabel();
         LabelBudget = new javax.swing.JLabel();
@@ -144,6 +143,7 @@ public class GUI_ManageDepartment extends javax.swing.JFrame {
         ButtonSearch = new javax.swing.JButton();
         ButtonQuit = new javax.swing.JButton();
         ButtonRefresh = new javax.swing.JButton();
+        LabelDepartmentID = new javax.swing.JLabel();
         PanelTable = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         DataTable = new javax.swing.JTable();
@@ -180,15 +180,6 @@ public class GUI_ManageDepartment extends javax.swing.JFrame {
         LabelDepartmentId.setFont(new java.awt.Font("Times New Roman", 1, 20)); // NOI18N
         LabelDepartmentId.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         LabelDepartmentId.setText("Department ID: ");
-
-        TextFieldId.setFont(new java.awt.Font("Times New Roman", 2, 24)); // NOI18N
-        TextFieldId.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        TextFieldId.setToolTipText("");
-        TextFieldId.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                TextFieldIdActionPerformed(evt);
-            }
-        });
 
         TextFieldName.setFont(new java.awt.Font("Times New Roman", 2, 24)); // NOI18N
         TextFieldName.setHorizontalAlignment(javax.swing.JTextField.CENTER);
@@ -317,6 +308,9 @@ public class GUI_ManageDepartment extends javax.swing.JFrame {
             }
         });
 
+        LabelDepartmentID.setFont(new java.awt.Font("Times New Roman", 2, 25)); // NOI18N
+        LabelDepartmentID.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+
         javax.swing.GroupLayout PanelFunctionLayout = new javax.swing.GroupLayout(PanelFunction);
         PanelFunction.setLayout(PanelFunctionLayout);
         PanelFunctionLayout.setHorizontalGroup(
@@ -330,8 +324,8 @@ public class GUI_ManageDepartment extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(PanelFunctionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                     .addComponent(TextFieldName, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 250, Short.MAX_VALUE)
-                    .addComponent(TextFieldId, javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(TextFieldBudget))
+                    .addComponent(TextFieldBudget)
+                    .addComponent(LabelDepartmentID, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(39, 39, 39)
                 .addGroup(PanelFunctionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(PanelFunctionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
@@ -369,7 +363,7 @@ public class GUI_ManageDepartment extends javax.swing.JFrame {
                         .addGroup(PanelFunctionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addGroup(PanelFunctionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                 .addComponent(LabelDepartmentId, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(TextFieldId, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(LabelDepartmentID, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(PanelFunctionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                 .addComponent(ButtonAdd, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addComponent(ButtonEdit, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)))
@@ -501,7 +495,7 @@ public class GUI_ManageDepartment extends javax.swing.JFrame {
 
     private void ButtonDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ButtonDeleteActionPerformed
         // TODO add your handling code here:
-        String departmentId = TextFieldId.getText();
+        String departmentId = LabelDepartmentID.getText();
         try {
             if (busDepartment.DeleteDepartment(departmentId) > 0) {
                 JOptionPane.showMessageDialog(this, "Complete delete department", "Message", JOptionPane.INFORMATION_MESSAGE);
@@ -515,10 +509,6 @@ public class GUI_ManageDepartment extends javax.swing.JFrame {
 
 
     }//GEN-LAST:event_ButtonDeleteActionPerformed
-
-    private void TextFieldIdActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TextFieldIdActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_TextFieldIdActionPerformed
 
     private void ButtonAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ButtonAddActionPerformed
         // TODO add your handling code here:
@@ -668,7 +658,7 @@ public class GUI_ManageDepartment extends javax.swing.JFrame {
     private void ButtonEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ButtonEditActionPerformed
 
         try {
-            dtoDepartment.setID( Integer.parseInt(TextFieldId.getText()));
+            dtoDepartment.setID( Integer.parseInt(LabelDepartmentID.getText()));
             dtoDepartment.setNAME(TextFieldName.getText());
             dtoDepartment.setADMINISTRATOR(TextFieldAdministrator.getText());
 
@@ -734,6 +724,7 @@ public class GUI_ManageDepartment extends javax.swing.JFrame {
     public javax.swing.JTable DataTable;
     public javax.swing.JLabel LabelAdministrator;
     public javax.swing.JLabel LabelBudget;
+    public javax.swing.JLabel LabelDepartmentID;
     public javax.swing.JLabel LabelDepartmentId;
     public javax.swing.JLabel LabelName;
     public javax.swing.JLabel LabelSearch;
@@ -745,7 +736,6 @@ public class GUI_ManageDepartment extends javax.swing.JFrame {
     public javax.swing.JPanel PanelTitle;
     public javax.swing.JTextField TextFieldAdministrator;
     public javax.swing.JTextField TextFieldBudget;
-    public javax.swing.JTextField TextFieldId;
     public javax.swing.JTextField TextFieldName;
     public javax.swing.JTextField TextFieldSearch;
     public javax.swing.JTextField TextFieldStartDate;
