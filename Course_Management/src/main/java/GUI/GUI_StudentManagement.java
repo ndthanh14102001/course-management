@@ -6,6 +6,8 @@ package GUI;
 
 import BUS.BUS_Person;
 import DTO.DTO_Person;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.sql.Date;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
@@ -31,6 +33,13 @@ public class GUI_StudentManagement extends javax.swing.JFrame {
     public GUI_StudentManagement() {
         initComponents();
         showStudents();
+        addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent e) {
+                String[] args = null;
+                GUI_ChooseOption.main(args);
+            }
+        });
     }
 
     void showStudents() {

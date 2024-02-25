@@ -6,6 +6,8 @@ package GUI;
 
 import BUS.BUS_Person;
 import DTO.DTO_Person;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.sql.Date;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
@@ -31,6 +33,13 @@ public class GUI_Instructor extends javax.swing.JFrame {
     public GUI_Instructor() {
         initComponents();
         showInstructors();
+        addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent e) {
+                String[] args = null;
+                GUI_ChooseOption.main(args);
+            }
+        });
     }
 
     void showInstructors() {
@@ -79,7 +88,7 @@ public class GUI_Instructor extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         btnShowInstructingCourses = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         tbInstructors.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
