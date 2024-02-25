@@ -41,14 +41,22 @@ public class BUS_Person {
         return persondal.Show();
     }
 
-    public List<DTO_Person> GetAllInstructors() {
+    public List<DTO_Person> GetAllInstructorsWithCourseCount() {
         persondal = new DAO_Person();
-        return persondal.GetAllInstructors();
+        List<DTO_Person> instructorsWithCourseCount = persondal.GetAllInstructorsWithCourseCount();
+        List<DTO_Person> instructorsWithoutCourseCount = persondal.GetAllInstructorsWithoutCourse();
+
+        instructorsWithCourseCount.addAll(instructorsWithoutCourseCount);
+        return instructorsWithCourseCount;
     }
 
-    public List<DTO_Person> GetAllStudent() {
+    public List<DTO_Person> GetAllStudentWithCourseCount() {
         persondal = new DAO_Person();
-        return persondal.GetAllStudent();
+        List<DTO_Person> studentsWithCourseCount = persondal.GetAllStudentWithCourseCount();
+        List<DTO_Person> studentsWithoutCourseCount = persondal.GetAllStudentWithoutCourse();
+
+        studentsWithCourseCount.addAll(studentsWithoutCourseCount);
+        return studentsWithCourseCount;
     }
 
     public List<DTO_Person> Search(String id) {

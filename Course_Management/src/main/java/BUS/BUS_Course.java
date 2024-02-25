@@ -5,7 +5,9 @@
 package BUS;
 
 import DAO.DAO_Course;
+import DAO.DAO_Person;
 import DTO.DTO_Course;
+import DTO.DTO_Person;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -20,16 +22,6 @@ public class BUS_Course {
 
     public DAO_Course dao__course = new DAO_Course();
     public DTO_Course dto__course = new DTO_Course();
-
-    public List LoadCourse(int page) throws SQLException {
-        int numOfRecords_course = 30;
-        ArrayList list_course = dao__course.ReadCourse();
-        int size = list_course.size();
-        int from, to;
-        from = (page - 1) * numOfRecords_course;
-        to = page * numOfRecords_course;
-        return list_course.subList(from, Math.min(to, size));
-    }
 
     public int Add_course(DTO_Course dto__course) throws SQLException {
         int result = dao__course.Add_Course(dto__course);
@@ -49,5 +41,48 @@ public class BUS_Course {
 
     public List<DTO_Course> getAll() {
         return new DAO_Course().getAll();
+    }
+
+    public List<DTO_Course> getCoursesByStudentId(int studentId) {
+        DAO_Course courseDAO = new DAO_Course();
+        List<DTO_Course> onlineCourses = courseDAO.getOnlineCoursesByStudentId(studentId);
+        List<DTO_Course> siteCourses = courseDAO.getOnsiteCoursesByStudentId(studentId);
+
+        onlineCourses.addAll(siteCourses);
+        return onlineCourses;
+
+    }
+
+    public List<DTO_Course> getCoursesOfInstructor(int instructorId) {
+        DAO_Course courseDAO = new DAO_Course();
+        List<DTO_Course> onlineCourses = courseDAO.getOnlineCoursesCoursesOfInstructor(instructorId);
+        List<DTO_Course> siteCourses = courseDAO.getOnsiteCoursesCoursesOfInstructor(instructorId);
+
+        onlineCourses.addAll(siteCourses);
+        return onlineCourses;
+    }
+
+    public void addOnsiteCourse(DTO_Course course) throws SQLException {
+        DAO_Course courseDAO = new DAO_Course();
+        courseDAO.Add_Course(course);
+        courseDAO.Add_OnsiteCourse(course);
+    }
+
+    public void updateOnsiteCourse(DTO_Course course) throws SQLException {
+        DAO_Course courseDAO = new DAO_Course();
+        courseDAO.Edit_Course(course);
+        courseDAO.Update_OnsiteCourse(course);
+    }
+
+    public void addOnlineCourse(DTO_Course course) throws SQLException {
+        DAO_Course courseDAO = new DAO_Course();
+        courseDAO.Add_Course(course);
+        courseDAO.Add_OnlineCourse(course);
+    }
+
+    public void updateOnlineCourse(DTO_Course course) throws SQLException {
+        DAO_Course courseDAO = new DAO_Course();
+        courseDAO.Edit_Course(course);
+        courseDAO.Update_OnlineCourse(course);
     }
 }

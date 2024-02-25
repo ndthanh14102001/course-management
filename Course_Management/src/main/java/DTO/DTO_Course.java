@@ -4,6 +4,10 @@
  */
 package DTO;
 
+import java.sql.Date;
+import java.sql.Time;
+import java.text.SimpleDateFormat;
+
 /**
  *
  * @author Duc Anh
@@ -12,7 +16,10 @@ public class DTO_Course {
 
     int COURSEID, DEPARTMENTID;
     String TITLE, CREDITS;
-
+    String URL, LOCATION;
+    Date date;
+    Time time;
+    DTO_Department department;
 
     public DTO_Course() {
     }
@@ -54,6 +61,65 @@ public class DTO_Course {
 
     public void setDEPARTMENTID(int DEPARTMENTID) {
         this.DEPARTMENTID = DEPARTMENTID;
+    }
+
+    public String getURL() {
+        return URL;
+    }
+
+    public String getLOCATION() {
+        return LOCATION;
+    }
+
+    public Date getDate() {
+        return date;
+    }
+
+    public String getDateString() {
+        try {
+            SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyy");
+            return sdf.format(date);
+        } catch (Exception e) {
+            return "";
+        }
+    }
+
+    ;
+    public Time getTime() {
+        return time;
+    }
+
+    public String getTimeString() {
+        try {
+            SimpleDateFormat sdf = new SimpleDateFormat("HH:mm");
+            return sdf.format(new Date(time.getTime()));
+        } catch (Exception e) {
+            return "";
+        }
+    }
+
+    public void setURL(String URL) {
+        this.URL = URL;
+    }
+
+    public void setLOCATION(String LOCATION) {
+        this.LOCATION = LOCATION;
+    }
+
+    public void setDate(Date date) {
+        this.date = date;
+    }
+
+    public void setTime(Time time) {
+        this.time = time;
+    }
+
+    public DTO_Department getDepartment() {
+        return department;
+    }
+
+    public void setDepartment(DTO_Department department) {
+        this.department = department;
     }
 
 }
