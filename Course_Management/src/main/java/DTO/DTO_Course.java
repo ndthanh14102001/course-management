@@ -4,6 +4,9 @@
  */
 package DTO;
 
+import java.sql.Date;
+import java.sql.Time;
+
 /**
  *
  * @author Duc Anh
@@ -12,7 +15,9 @@ public class DTO_Course {
 
     int COURSEID, DEPARTMENTID;
     String TITLE, CREDITS;
-
+    String URL,LOCATION;
+    Date date;
+    Time time;
 
     public DTO_Course() {
     }
@@ -54,6 +59,38 @@ public class DTO_Course {
 
     public void setDEPARTMENTID(int DEPARTMENTID) {
         this.DEPARTMENTID = DEPARTMENTID;
+    }
+
+    public String getURL() {
+        return URL;
+    }
+
+    public String getLOCATION() {
+        return LOCATION;
+    }
+
+    public Date getDate() {
+        return date;
+    }
+
+    public Time getTime() {
+        return time;
+    }
+
+    public void setURL(String URL) {
+        this.URL = URL;
+    }
+
+    public void setLOCATION(String LOCATION) {
+        this.LOCATION = LOCATION;
+    }
+
+    public void setDate(Date date) {
+        this.date = date;
+    }
+
+    public void setTime(Time time) {
+        this.time = time;
     }
 
 }

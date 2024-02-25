@@ -113,4 +113,35 @@ public class DAO_Course extends ConnectDB {
         }
         return courses;
     }
+
+    public List<DTO_Course> getCoursesByStudentId(int studentId) {
+        String query = "SELECT * FROM `studentgrade`,`course`,`onlinecourse`,`onsitecourse`\n"
+                + "WHERE `studentgrade`.`STUDENTID` = ? \n"
+                + "GROUP BY `studentgrade`.`COURSEID`;";
+
+        ArrayList<DTO_Course> courses = new ArrayList<DTO_Course>();
+
+        try {
+            PreparedStatement p = ConnectDB.getConnection().prepareStatement(query);
+            p.setInt(1, studentId);
+            ResultSet rs = p.executeQuery();
+            if (rs != null) {
+
+                while (rs.next()) {
+                    DTO_Course course = new DTO_Course();
+                    course.setCOURSEID(rs.getInt("COURSEID"));
+                    course.setTITLE(rs.getString("TITLE"));
+                    course.setCREDITS(rs.getString("CREDITS"));
+                    course.setDEPARTMENTID(rs.getInt("DEPARTMENTID"));
+                    course.setLOCATION(rs.getString("LOCATION"));
+                    course.setURL(rs.getString("URL"));
+                    course.setTime(rs.getTime("TIMES"));
+                    course.setDate(rs.getDate("DATES"));
+                    courses.add(course);
+                }
+            }
+        } catch (Exception e) {
+        }
+        return courses;
+    }
 }

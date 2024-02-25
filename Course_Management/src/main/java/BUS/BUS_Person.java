@@ -46,9 +46,13 @@ public class BUS_Person {
         return persondal.GetAllInstructors();
     }
 
-    public List<DTO_Person> GetAllStudent() {
+    public List<DTO_Person> GetAllStudentWithCourseCount() {
         persondal = new DAO_Person();
-        return persondal.GetAllStudent();
+        List<DTO_Person> studentsWithCourseCount = persondal.GetAllStudentWithCourseCount();
+        List<DTO_Person> studentsWithoutCourseCount = persondal.GetAllStudentWithoutCourse();
+
+        studentsWithCourseCount.addAll(studentsWithoutCourseCount);
+        return studentsWithCourseCount;
     }
 
     public List<DTO_Person> Search(String id) {

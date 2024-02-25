@@ -16,6 +16,7 @@ public class DTO_Person {
     private int id;
     private String last_name, first_name;
     private Date hire_date, enrollment_date;
+    private int courseCount;
 
     public DTO_Person() {
     }
@@ -26,6 +27,7 @@ public class DTO_Person {
         this.first_name = first_name;
         this.hire_date = hire_date;
         this.enrollment_date = enrollment_date;
+
     }
 
     public DTO_Person(String last_name, String first_name, Date hire_date, Date enrollment_date) {
@@ -33,6 +35,7 @@ public class DTO_Person {
         this.first_name = first_name;
         this.hire_date = hire_date;
         this.enrollment_date = enrollment_date;
+
     }
 
     public int getId() {
@@ -55,16 +58,18 @@ public class DTO_Person {
         return enrollment_date;
     }
 
-
     public String getHireDateString() {
         SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyy");
         return sdf.format(hire_date);
     }
 
-
     public String getEnrollmentString() {
         SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyy");
         return sdf.format(enrollment_date);
+    }
+
+    public void setCourseCount(int courseCount) {
+        this.courseCount = courseCount;
     }
 
     public void setId(int id) {
@@ -91,4 +96,7 @@ public class DTO_Person {
         return this.last_name + " " + this.first_name;
     }
 
+    public int getCourseCount() {
+        return courseCount;
+    }
 }
