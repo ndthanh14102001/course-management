@@ -9,8 +9,12 @@ package DTO;
  * @author Paul
  */
 public class DTO_Person {
+
     private int id;
     private String last_name, first_name, hire_date, enrollment_date;
+
+    public DTO_Person() {
+    }
 
     public DTO_Person(int id, String last_name, String first_name, String hire_date, String enrollment_date) {
         this.id = id;
@@ -19,7 +23,7 @@ public class DTO_Person {
         this.hire_date = hire_date;
         this.enrollment_date = enrollment_date;
     }
-    
+
     public DTO_Person(String last_name, String first_name, String hire_date, String enrollment_date) {
         this.last_name = last_name;
         this.first_name = first_name;
@@ -41,13 +45,13 @@ public class DTO_Person {
 
     public String getHire_date() {
         String[] hire = hire_date.split("-", 0);
-        String res = hire[2]+"-"+hire[1]+"-"+hire[0];   //Chuyển về đúng định dạng
+        String res = hire[2] + "-" + hire[1] + "-" + hire[0];   //Chuyển về đúng định dạng
         return res;
     }
 
     public String getEnrollment_date() {
         String[] enrollment = enrollment_date.split("-", 0);
-        String res = enrollment[2]+"-"+enrollment[1]+"-"+enrollment[0];
+        String res = enrollment[2] + "-" + enrollment[1] + "-" + enrollment[0];
         return res;
     }
 
@@ -70,9 +74,9 @@ public class DTO_Person {
     public void setEnrollment_date(String enrollment_date) {
         this.enrollment_date = enrollment_date;
     }
-    
+
     public String getName() {
         return this.last_name + " " + this.first_name;
     }
-    
+
 }
