@@ -20,15 +20,8 @@ public class BUS_StudentGrade {
     public DAO_StudentGrade daoStudentGrade = new DAO_StudentGrade();
     public DTO_StudentGrade dtoStudentGrade = new DTO_StudentGrade();
 
-    public List LoadStudentGrade(int page) throws SQLException {
-        int numOfRecords = 30;
-
-        ArrayList list = daoStudentGrade.ReadStudentGrade();
-        int size = list.size();
-        int from, to;
-        from = (page - 1) * numOfRecords;
-        to = page * numOfRecords;
-        return list.subList(from, Math.min(to, size));
+    public List LoadStudentGrade() throws SQLException {
+        return daoStudentGrade.ReadStudentGrade();
     }
 
     public int AddStudentGrade(DTO_StudentGrade dtoStudentGrade) throws SQLException {

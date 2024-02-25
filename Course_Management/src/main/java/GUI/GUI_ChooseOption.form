@@ -124,6 +124,7 @@
                   <Group type="103" groupAlignment="0" max="-2" attributes="0">
                       <Component id="ButtonChooseOptionDepartmentManagement" pref="215" max="32767" attributes="0"/>
                       <Component id="ButtonChooseOptionOnsiteCourseManagement" max="32767" attributes="0"/>
+                      <Component id="btnResigeterCourse" max="32767" attributes="0"/>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
               </Group>
@@ -136,7 +137,7 @@
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="ButtonChooseOptionCourseManagement" alignment="3" min="-2" pref="75" max="-2" attributes="0"/>
                       <Component id="ButtonChooseOptionCourseInstructorManagement" alignment="3" min="-2" pref="75" max="-2" attributes="0"/>
-                      <Component id="ButtonChooseOptionDepartmentManagement" alignment="3" min="-2" pref="75" max="-2" attributes="0"/>
+                      <Component id="btnResigeterCourse" alignment="3" min="-2" pref="75" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace min="-2" pref="51" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
@@ -148,6 +149,7 @@
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="ButtonChooseOptionPersonManagement" alignment="3" min="-2" pref="75" max="-2" attributes="0"/>
                       <Component id="ButtonChooseOptionStudentGradeManagement" alignment="3" min="-2" pref="75" max="-2" attributes="0"/>
+                      <Component id="ButtonChooseOptionDepartmentManagement" alignment="3" min="-2" pref="75" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace pref="34" max="32767" attributes="0"/>
               </Group>
@@ -262,6 +264,20 @@
           </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="ButtonChooseOptionOnlineCourseManagementActionPerformed"/>
+          </Events>
+          <AuxValues>
+            <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="1"/>
+          </AuxValues>
+        </Component>
+        <Component class="javax.swing.JButton" name="btnResigeterCourse">
+          <Properties>
+            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+              <Font name="Times New Roman" size="20" style="1"/>
+            </Property>
+            <Property name="text" type="java.lang.String" value="Register Course"/>
+          </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnResigeterCourseActionPerformed"/>
           </Events>
           <AuxValues>
             <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="1"/>

@@ -4,6 +4,7 @@
  */
 package DAO;
 
+import DTO.DTO_Course;
 import DTO.DTO_Person;
 import DTO.DTO_StudentGrade;
 import Services.ConnectDB;
@@ -24,37 +25,23 @@ public class DAO_StudentGrade extends ConnectDB {
     }
 
     public ArrayList ReadStudentGrade() throws SQLException {
-        String query = "SELECT * FROM STUDENTGRADE";
+        String query = "SELECT * FROM `studentgrade`,`person` WHERE `studentgrade`.`STUDENTID` = `person`.`PERSONID`;";
         ResultSet rs = DAO_StudentGrade.doReadQuery(query);
         ArrayList list = new ArrayList();
 
         if (rs != null) {
-            int i = 1;
-
             while (rs.next()) {
                 DTO_StudentGrade dtoStudentGrade = new DTO_StudentGrade();
                 dtoStudentGrade.setENROLLMENTID(rs.getInt("ENROLLMENTID"));
                 dtoStudentGrade.setCOURSEID(rs.getInt("COURSEID"));
                 dtoStudentGrade.setSTUDENTID(rs.getInt("STUDENTID"));
                 dtoStudentGrade.setGRADE(rs.getInt("GRADE"));
+                dtoStudentGrade.setFirst_name(rs.getString("FIRSTNAME"));
+                dtoStudentGrade.setLast_name(rs.getString("LASTNAME"));
                 list.add(dtoStudentGrade);
             }
         }
         return list;
-    }
-
-    public ArrayList ReadCOURSEID_course() throws SQLException {
-        String query = "SELECT COURSEID FROM Course";
-        ResultSet rs = DAO_StudentGrade.doReadQuery(query);
-        ArrayList listcourseID_course = new ArrayList();
-        if (rs != null) {
-            int i = 1;
-            while (rs.next()) {
-                int courseID_course = rs.getInt("COURSEID");
-                listcourseID_course.add(courseID_course);
-            }
-        }
-        return listcourseID_course;
     }
 
     public ArrayList ReadPERSONID_person() throws SQLException {
@@ -140,7 +127,6 @@ public class DAO_StudentGrade extends ConnectDB {
             ResultSet rs = p.executeQuery();
 
             if (rs != null) {
-                int i = 1;
 
                 while (rs.next()) {
                     DTO_StudentGrade dtoStudentGrade = new DTO_StudentGrade();
