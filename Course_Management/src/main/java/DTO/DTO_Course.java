@@ -9,9 +9,10 @@ package DTO;
  * @author Duc Anh
  */
 public class DTO_Course {
-    int COURSEID;
+
+    int COURSEID, DEPARTMENTID;
     String TITLE, CREDITS;
-    int DEPARTMENTID;
+
 
     public DTO_Course() {
     }
@@ -54,5 +55,5 @@ public class DTO_Course {
     public void setDEPARTMENTID(int DEPARTMENTID) {
         this.DEPARTMENTID = DEPARTMENTID;
     }
-    
+
 }
