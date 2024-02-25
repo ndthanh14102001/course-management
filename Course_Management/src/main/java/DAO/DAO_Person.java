@@ -30,14 +30,36 @@ public class DAO_Person {
         conn = ConnectDB.getConnection();
     }
 
-    public List<DTO_Person> GetAllInstructors() {
+    public List<DTO_Person> GetAllInstructorsWithCourseCount() {
         persons = new ArrayList<DTO_Person>();
         try {
             Statement stmt = conn.createStatement();
-            ResultSet rs = stmt.executeQuery("Select * From Person WHERE HIREDATE IS NOT NULL");
+            ResultSet rs = stmt.executeQuery("SELECT *,COUNT(*) AS NUMBER_OF_COURSES FROM `courseinstructor`,`person` \n"
+                    + "WHERE `person`.`HIREDATE` IS NOT NULL "
+                    + "AND `person`.`PERSONID` = `courseinstructor`.`PERSONID` "
+                    + "GROUP BY `person`.`PERSONID`;");
             while (rs.next()) {
                 DTO_Person p = new DTO_Person(rs.getInt("PERSONID"), rs.getString("LASTNAME"), rs.getString("FIRSTNAME"), rs.getDate("HIREDATE"), rs.getDate("ENROLLMENTDATE"));
+                p.setCourseCount(rs.getInt("NUMBER_OF_COURSES"));
                 persons.add(p);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return persons;
+    }
+
+    public List<DTO_Person> GetAllInstructorsWithoutCourse() {
+        persons = new ArrayList<DTO_Person>();
+        try {
+            Statement stmt = conn.createStatement();
+            ResultSet rs = stmt.executeQuery("SELECT * FROM `person` \n"
+                    + "WHERE `person`.HIREDATE IS NOT NULL "
+                    + "AND PERSONID NOT IN (SELECT PERSONID FROM `courseinstructor`)");
+            while (rs.next()) {
+                DTO_Person person = new DTO_Person(rs.getInt("PERSONID"), rs.getString("LASTNAME"), rs.getString("FIRSTNAME"), rs.getDate("HIREDATE"), rs.getDate("ENROLLMENTDATE"));
+                person.setCourseCount(0);
+                persons.add(person);
             }
         } catch (Exception e) {
             e.printStackTrace();

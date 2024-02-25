@@ -54,4 +54,8 @@ public class BUS_Course {
     public List<DTO_Course> getCoursesByStudentId(int studentId) {
         return new DAO_Course().getCoursesByStudentId(studentId);
     }
+    
+       public List<DTO_Course> getCoursesOfInstructor(int instructorId) {
+        return new DAO_Course().getCoursesOfInstructor(instructorId);
+    }
 }

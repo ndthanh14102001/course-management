@@ -41,7 +41,7 @@ public class GUI_StudentManagement extends javax.swing.JFrame {
     }
 
     private DefaultTableModel convertPersons(List list) {
-        String[] columnNames = {"ID", "Last Name", "First Name", "Enrollment Date", "Course Count"};
+        String[] columnNames = {"ID", "Last Name", "First Name", "Enrollment Date", "Registed Courses"};
         Object[][] data = new Object[list.size()][5];
         for (int i = 0; i < list.size(); i++) {
             DTO_Person persons = (DTO_Person) list.get(i);

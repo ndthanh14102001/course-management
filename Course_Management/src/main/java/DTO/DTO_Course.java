@@ -6,6 +6,7 @@ package DTO;
 
 import java.sql.Date;
 import java.sql.Time;
+import java.text.SimpleDateFormat;
 
 /**
  *
@@ -15,7 +16,7 @@ public class DTO_Course {
 
     int COURSEID, DEPARTMENTID;
     String TITLE, CREDITS;
-    String URL,LOCATION;
+    String URL, LOCATION;
     Date date;
     Time time;
 
@@ -75,6 +76,11 @@ public class DTO_Course {
 
     public Time getTime() {
         return time;
+    }
+
+    public String getTimeString() {
+        SimpleDateFormat sdf = new SimpleDateFormat("HH:mm");
+        return sdf.format(new Date(time.getTime()));
     }
 
     public void setURL(String URL) {
