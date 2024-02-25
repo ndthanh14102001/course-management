@@ -44,7 +44,22 @@ public class DAO_Person {
         }
         return persons;
     }
-
+    
+      public List<DTO_Person> GetAllStudent() {
+        persons = new ArrayList<DTO_Person>();
+        try {
+            Statement stmt = conn.createStatement();
+            ResultSet rs = stmt.executeQuery("Select * From Person WHERE ENROLLMENTDATE IS NOT NULL");
+            while (rs.next()) {
+                DTO_Person p = new DTO_Person(rs.getInt("PERSONID"), rs.getString("LASTNAME"), rs.getString("FIRSTNAME"), rs.getDate("HIREDATE"), rs.getDate("ENROLLMENTDATE"));
+                persons.add(p);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return persons;
+    }
+      
     public void Add(DTO_Person person) {
         try {
             String sql = "INSERT PERSON (LASTNAME, FIRSTNAME, HIREDATE, ENROLLMENTDATE) VALUES (? , ?, ?, ?)";

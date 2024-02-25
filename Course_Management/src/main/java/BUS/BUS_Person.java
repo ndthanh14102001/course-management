@@ -26,12 +26,12 @@ public class BUS_Person {
         persondal.Add(p);
     }
 
-    public void Update(DTO_Person p, int id) throws SQLException{
+    public void Update(DTO_Person p, int id) throws SQLException {
         persondal = new DAO_Person();
         persondal.Update(p, id);
     }
 
-    public void Delete(String id) throws SQLException{
+    public void Delete(String id) throws SQLException {
         persondal = new DAO_Person();
         persondal.Delete(id);
     }
@@ -44,6 +44,11 @@ public class BUS_Person {
     public List<DTO_Person> GetAllInstructors() {
         persondal = new DAO_Person();
         return persondal.GetAllInstructors();
+    }
+
+    public List<DTO_Person> GetAllStudent() {
+        persondal = new DAO_Person();
+        return persondal.GetAllStudent();
     }
 
     public List<DTO_Person> Search(String id) {
