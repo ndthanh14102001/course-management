@@ -3,9 +3,11 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package GUI;
+
 import javax.swing.*;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+
 /**
  *
  * @author Duc Anh
@@ -13,39 +15,39 @@ import java.awt.event.WindowEvent;
 public class GUI_ChooseOption extends javax.swing.JFrame {
 
     private String[] args;
-   
 
     /**
      * Creates new form GUI_ChooseOption
      */
     public GUI_ChooseOption() {
         initComponents();
-        
+
+        setLocationRelativeTo(null);
         // Close Form/Window
         setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
         addWindowListener(new WindowAdapter() {
-        @Override
-        public void windowClosing(WindowEvent e) {
-            int option = JOptionPane.showConfirmDialog(
-                    GUI_ChooseOption.this,
-                    "Bạn có chắc muốn đóng ứng dụng không?",
-                    "Xác nhận đóng",
-                    JOptionPane.YES_NO_OPTION
-            );
+            @Override
+            public void windowClosing(WindowEvent e) {
+                int option = JOptionPane.showConfirmDialog(
+                        GUI_ChooseOption.this,
+                        "Bạn có chắc muốn đóng ứng dụng không?",
+                        "Xác nhận đóng",
+                        JOptionPane.YES_NO_OPTION
+                );
 
-            if (option == JOptionPane.YES_OPTION) {
-                // Thực hiện các thao tác cần thiết trước khi đóng ứng dụng
-                // Ví dụ: Lưu dữ liệu, đóng kết nối, v.v.
+                if (option == JOptionPane.YES_OPTION) {
+                    // Thực hiện các thao tác cần thiết trước khi đóng ứng dụng
+                    // Ví dụ: Lưu dữ liệu, đóng kết nối, v.v.
 
-                // Đóng JFrame
-                dispose();
-                
-                // (Optional) Kết thúc ứng dụng
-                System.exit(0);
+                    // Đóng JFrame
+                    dispose();
+
+                    // (Optional) Kết thúc ứng dụng
+                    System.exit(0);
+                }
             }
-        }
-    });
-        
+        });
+
     }
 
     /**

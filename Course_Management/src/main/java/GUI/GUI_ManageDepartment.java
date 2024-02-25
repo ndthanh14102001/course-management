@@ -1,3 +1,4 @@
+
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
@@ -19,6 +20,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
 /**
  *
  * @author Đức Anh
@@ -27,10 +29,10 @@ public class GUI_ManageDepartment extends javax.swing.JFrame {
 
     private static int pos = 0;
     SimpleDateFormat Date = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
-    public DAO_Department daoDepartment = new DAO_Department(); 
-    public DTO_Department dtoDepartment = new DTO_Department(); 
-    public BUS_Department busDepartment = new BUS_Department(); 
-    
+    public DAO_Department daoDepartment = new DAO_Department();
+    public DTO_Department dtoDepartment = new DTO_Department();
+    public BUS_Department busDepartment = new BUS_Department();
+
     /**
      * Creates new form ManageDepartment
      */
@@ -64,7 +66,7 @@ public class GUI_ManageDepartment extends javax.swing.JFrame {
             }
         });
     }
-    
+
     private DefaultTableModel convertDepartment(List list) {
         String[] columnNames = {"Department ID", "Name", "Budget", "Start Date", "Administrator"};
         Object[][] data = new Object[list.size()][5];
@@ -79,7 +81,7 @@ public class GUI_ManageDepartment extends javax.swing.JFrame {
         DefaultTableModel model = new DefaultTableModel(data, columnNames);
         return model;
     }
-    
+
     private void listDepartment() throws SQLException {
 //        DAO_Department daoDepartment = new DAO_Department();
 //        List list = daoDepartment.ReadDepartment();
@@ -93,21 +95,19 @@ public class GUI_ManageDepartment extends javax.swing.JFrame {
         LabelStatus.setText("Num Of Departments: " + list.size());
     }
 
-    public void View() throws SQLException
-    {
+    public void View() throws SQLException {
         DAO_Department department = new DAO_Department();
         ArrayList list = department.ReadDepartment();
-        DTO_Department dtoDepartment = (DTO_Department)list.get(pos);
-        this.TextFieldId.setText(dtoDepartment.getID());
+        DTO_Department dtoDepartment = (DTO_Department) list.get(pos);
+        this.LabelDepartmentID.setText(dtoDepartment.getID() + "");
         this.TextFieldName.setText(dtoDepartment.getNAME());
         this.TextFieldBudget.setText(Double.toString(dtoDepartment.getBUDGET()));
         this.TextFieldStartDate.setText(Date.format(dtoDepartment.getSTARTDATE()));
         this.TextFieldAdministrator.setText(dtoDepartment.getADMINISTRATOR());
     }
-    
-    public void NullView() throws SQLException
-    {
-        this.TextFieldId.setText("");
+
+    public void NullView() throws SQLException {
+        this.LabelDepartmentID.setText("");
         this.TextFieldName.setText("");
         this.TextFieldBudget.setText("");
         this.TextFieldStartDate.setText("");
@@ -128,7 +128,6 @@ public class GUI_ManageDepartment extends javax.swing.JFrame {
         LabelTitle = new javax.swing.JLabel();
         PanelFunction = new javax.swing.JPanel();
         LabelDepartmentId = new javax.swing.JLabel();
-        TextFieldId = new javax.swing.JTextField();
         TextFieldName = new javax.swing.JTextField();
         LabelName = new javax.swing.JLabel();
         LabelBudget = new javax.swing.JLabel();
@@ -145,6 +144,7 @@ public class GUI_ManageDepartment extends javax.swing.JFrame {
         ButtonSearch = new javax.swing.JButton();
         ButtonQuit = new javax.swing.JButton();
         ButtonRefresh = new javax.swing.JButton();
+        LabelDepartmentID = new javax.swing.JLabel();
         PanelTable = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         DataTable = new javax.swing.JTable();
@@ -181,15 +181,6 @@ public class GUI_ManageDepartment extends javax.swing.JFrame {
         LabelDepartmentId.setFont(new java.awt.Font("Times New Roman", 1, 20)); // NOI18N
         LabelDepartmentId.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         LabelDepartmentId.setText("Department ID: ");
-
-        TextFieldId.setFont(new java.awt.Font("Times New Roman", 2, 24)); // NOI18N
-        TextFieldId.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        TextFieldId.setToolTipText("");
-        TextFieldId.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                TextFieldIdActionPerformed(evt);
-            }
-        });
 
         TextFieldName.setFont(new java.awt.Font("Times New Roman", 2, 24)); // NOI18N
         TextFieldName.setHorizontalAlignment(javax.swing.JTextField.CENTER);
@@ -318,6 +309,9 @@ public class GUI_ManageDepartment extends javax.swing.JFrame {
             }
         });
 
+        LabelDepartmentID.setFont(new java.awt.Font("Times New Roman", 2, 25)); // NOI18N
+        LabelDepartmentID.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+
         javax.swing.GroupLayout PanelFunctionLayout = new javax.swing.GroupLayout(PanelFunction);
         PanelFunction.setLayout(PanelFunctionLayout);
         PanelFunctionLayout.setHorizontalGroup(
@@ -331,8 +325,8 @@ public class GUI_ManageDepartment extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(PanelFunctionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                     .addComponent(TextFieldName, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 250, Short.MAX_VALUE)
-                    .addComponent(TextFieldId, javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(TextFieldBudget))
+                    .addComponent(TextFieldBudget)
+                    .addComponent(LabelDepartmentID, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(39, 39, 39)
                 .addGroup(PanelFunctionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(PanelFunctionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
@@ -370,7 +364,7 @@ public class GUI_ManageDepartment extends javax.swing.JFrame {
                         .addGroup(PanelFunctionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addGroup(PanelFunctionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                 .addComponent(LabelDepartmentId, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(TextFieldId, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(LabelDepartmentID, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(PanelFunctionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                 .addComponent(ButtonAdd, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addComponent(ButtonEdit, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)))
@@ -502,7 +496,7 @@ public class GUI_ManageDepartment extends javax.swing.JFrame {
 
     private void ButtonDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ButtonDeleteActionPerformed
         // TODO add your handling code here:
-        String departmentId = TextFieldId.getText();
+        String departmentId = LabelDepartmentID.getText();
         try {
             if (busDepartment.DeleteDepartment(departmentId) > 0) {
                 JOptionPane.showMessageDialog(this, "Complete delete department", "Message", JOptionPane.INFORMATION_MESSAGE);
@@ -513,34 +507,30 @@ public class GUI_ManageDepartment extends javax.swing.JFrame {
         } catch (SQLException ex) {
             Logger.getLogger(GUI_Department.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
-        
-    }//GEN-LAST:event_ButtonDeleteActionPerformed
 
-    private void TextFieldIdActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TextFieldIdActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_TextFieldIdActionPerformed
+
+    }//GEN-LAST:event_ButtonDeleteActionPerformed
 
     private void ButtonAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ButtonAddActionPerformed
         // TODO add your handling code here:
 
         try {
-            dtoDepartment.setID(TextFieldId.getText()); 
-            dtoDepartment.setNAME(TextFieldName.getText()); 
+            //dtoDepartment.setID(TextFieldId.getText()); 
+            dtoDepartment.setNAME(TextFieldName.getText());
             dtoDepartment.setADMINISTRATOR(TextFieldAdministrator.getText());
-        
+
             dtoDepartment.setBUDGET(Double.parseDouble(TextFieldBudget.getText()));
             try {
                 dtoDepartment.setSTARTDATE(new SimpleDateFormat("dd/MM/yyyy").parse(TextFieldStartDate.getText()));
             } catch (ParseException ex) {
                 Logger.getLogger(GUI_ManageDepartment.class.getName()).log(Level.SEVERE, null, ex);
             }
-            
+
             if (busDepartment.AddDepartment(dtoDepartment) > 0) {
                 //NullView();
                 JOptionPane.showMessageDialog(this, "Complete add department", "Message", JOptionPane.INFORMATION_MESSAGE);
                 listDepartment();
-            } 
+            }
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(this, "Error add department", "Message", JOptionPane.ERROR_MESSAGE);
             Logger.getLogger(GUI_ManageDepartment.class.getName()).log(Level.SEVERE, null, ex);
@@ -556,7 +546,7 @@ public class GUI_ManageDepartment extends javax.swing.JFrame {
 
     private void DataTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_DataTableMouseClicked
         // TODO add your handling code here:
-        pos=this.DataTable.getSelectedRow();
+        pos = this.DataTable.getSelectedRow();
         try {
             View();
         } catch (SQLException ex) {
@@ -570,7 +560,7 @@ public class GUI_ManageDepartment extends javax.swing.JFrame {
 
     private void DataTableKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_DataTableKeyReleased
         // TODO add your handling code here:
-        pos=this.DataTable.getSelectedRow();
+        pos = this.DataTable.getSelectedRow();
         try {
             View();
         } catch (SQLException ex) {
@@ -579,27 +569,27 @@ public class GUI_ManageDepartment extends javax.swing.JFrame {
     }//GEN-LAST:event_DataTableKeyReleased
 
     private void ButtonRefreshActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ButtonRefreshActionPerformed
-        
-        pos=this.DataTable.getSelectedRow();
+
+        pos = this.DataTable.getSelectedRow();
         try {
             NullView();
         } catch (SQLException ex) {
             Logger.getLogger(GUI_ManageDepartment.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
+
         try {
             // TODO add your handling code here:
             listDepartment();
         } catch (SQLException ex) {
             Logger.getLogger(GUI_ManageDepartment.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
+
     }//GEN-LAST:event_ButtonRefreshActionPerformed
 
     private void ButtonSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ButtonSearchActionPerformed
         // TODO add your handling code here:
         try {
-            
+
             String searchInput = TextFieldSearch.getText();
             if (searchInput.isBlank() == false) {
                 List list = busDepartment.FindDepartment(searchInput);
@@ -609,7 +599,7 @@ public class GUI_ManageDepartment extends javax.swing.JFrame {
             } else {
                 JOptionPane.showMessageDialog(this, "Department is empty", "Message", JOptionPane.ERROR_MESSAGE);
             }
-            
+
         } catch (SQLException ex) {
             Logger.getLogger(GUI_ManageDepartment.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -669,10 +659,10 @@ public class GUI_ManageDepartment extends javax.swing.JFrame {
     private void ButtonEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ButtonEditActionPerformed
 
         try {
-            dtoDepartment.setID(TextFieldId.getText()); 
-            dtoDepartment.setNAME(TextFieldName.getText()); 
+            dtoDepartment.setID( Integer.parseInt(LabelDepartmentID.getText()));
+            dtoDepartment.setNAME(TextFieldName.getText());
             dtoDepartment.setADMINISTRATOR(TextFieldAdministrator.getText());
-        
+
             dtoDepartment.setBUDGET(Double.parseDouble(TextFieldBudget.getText()));
             try {
                 dtoDepartment.setSTARTDATE(new SimpleDateFormat("dd/MM/yyyy").parse(TextFieldStartDate.getText()));
@@ -683,11 +673,11 @@ public class GUI_ManageDepartment extends javax.swing.JFrame {
             } catch (ParseException ex) {
                 Logger.getLogger(GUI_ManageDepartment.class.getName()).log(Level.SEVERE, null, ex);
             }
-        } catch(Exception ex) {
+        } catch (Exception ex) {
             JOptionPane.showMessageDialog(this, "Error edit department", "Message", JOptionPane.ERROR_MESSAGE);
             Logger.getLogger(GUI_ManageDepartment.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
+
     }//GEN-LAST:event_ButtonEditActionPerformed
 
     /**
@@ -735,6 +725,7 @@ public class GUI_ManageDepartment extends javax.swing.JFrame {
     public javax.swing.JTable DataTable;
     public javax.swing.JLabel LabelAdministrator;
     public javax.swing.JLabel LabelBudget;
+    public javax.swing.JLabel LabelDepartmentID;
     public javax.swing.JLabel LabelDepartmentId;
     public javax.swing.JLabel LabelName;
     public javax.swing.JLabel LabelSearch;
@@ -746,7 +737,6 @@ public class GUI_ManageDepartment extends javax.swing.JFrame {
     public javax.swing.JPanel PanelTitle;
     public javax.swing.JTextField TextFieldAdministrator;
     public javax.swing.JTextField TextFieldBudget;
-    public javax.swing.JTextField TextFieldId;
     public javax.swing.JTextField TextFieldName;
     public javax.swing.JTextField TextFieldSearch;
     public javax.swing.JTextField TextFieldStartDate;
@@ -754,3 +744,4 @@ public class GUI_ManageDepartment extends javax.swing.JFrame {
     // End of variables declaration//GEN-END:variables
 
 }
+
