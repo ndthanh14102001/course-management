@@ -66,7 +66,7 @@ public class GUI_ManageCourse extends javax.swing.JFrame {
             public void windowClosing(WindowEvent e) {
                 int option = JOptionPane.showConfirmDialog(
                         GUI_ManageCourse.this,
-                        "Bạn có chắc muốn đóng ứng dụng không?",
+                        "Bạn có chắc muốn đóng cửa sổ này không?",
                         "Xác nhận đóng",
                         JOptionPane.YES_NO_OPTION
                 );
@@ -77,9 +77,8 @@ public class GUI_ManageCourse extends javax.swing.JFrame {
 
                     // Đóng JFrame
                     dispose();
-//                    String[] args = null;
-//                    GUI_ChooseOption.main(args);
-                    System.exit(0);
+                    String[] args = null;
+                    GUI_ChooseOption.main(args);
                 }
             }
         });

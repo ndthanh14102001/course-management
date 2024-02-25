@@ -32,6 +32,30 @@ public class GUI_Instructor extends javax.swing.JFrame {
      */
     public GUI_Instructor() {
         initComponents();
+
+        setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+        addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent e) {
+                int option = JOptionPane.showConfirmDialog(
+                        GUI_Instructor.this,
+                        "Bạn có chắc muốn đóng cửa sổ này không?",
+                        "Xác nhận đóng",
+                        JOptionPane.YES_NO_OPTION
+                );
+
+                if (option == JOptionPane.YES_OPTION) {
+                    // Thực hiện các thao tác cần thiết trước khi đóng ứng dụng
+                    // Ví dụ: Lưu dữ liệu, đóng kết nối, v.v.
+
+                    // Đóng JFrame
+                    dispose();
+                    String[] args = null;
+                    GUI_ChooseOption.main(args);
+                }
+            }
+        });
+
         showInstructors();
         addWindowListener(new WindowAdapter() {
             @Override
