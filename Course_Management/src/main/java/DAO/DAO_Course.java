@@ -114,10 +114,40 @@ public class DAO_Course extends ConnectDB {
         return courses;
     }
 
-    public List<DTO_Course> getCoursesByStudentId(int studentId) {
-        String query = "SELECT * FROM `studentgrade`,`course`,`onlinecourse`,`onsitecourse`\n"
+    public List<DTO_Course> getOnlineCoursesByStudentId(int studentId) {
+        String query = "SELECT * FROM `studentgrade`,`course`,`onlinecourse`\n"
                 + "WHERE `studentgrade`.`STUDENTID` = ? \n"
-                + "GROUP BY `studentgrade`.`COURSEID`;";
+                + "AND `course`.COURSEID = `onlinecourse`.COURSEID \n"
+                + "AND `studentgrade`.COURSEID = `course`.COURSEID";
+
+        ArrayList<DTO_Course> courses = new ArrayList<DTO_Course>();
+
+        try {
+            PreparedStatement p = ConnectDB.getConnection().prepareStatement(query);
+            p.setInt(1, studentId);
+            ResultSet rs = p.executeQuery();
+            if (rs != null) {
+
+                while (rs.next()) {
+                    DTO_Course course = new DTO_Course();
+                    course.setCOURSEID(rs.getInt("COURSEID"));
+                    course.setTITLE(rs.getString("TITLE"));
+                    course.setCREDITS(rs.getString("CREDITS"));
+                    course.setDEPARTMENTID(rs.getInt("DEPARTMENTID"));
+                    course.setURL(rs.getString("URL"));
+                    courses.add(course);
+                }
+            }
+        } catch (Exception e) {
+        }
+        return courses;
+    }
+    
+    public List<DTO_Course> getOnsiteCoursesByStudentId(int studentId) {
+        String query = "SELECT * FROM `studentgrade`,`course`,`onsitecourse`\n"
+                + "WHERE `studentgrade`.`STUDENTID` = ? \n"
+                + "AND `course`.COURSEID = `onsitecourse`.COURSEID \n"
+                + "AND `studentgrade`.COURSEID = `course`.COURSEID";
 
         ArrayList<DTO_Course> courses = new ArrayList<DTO_Course>();
 
@@ -134,7 +164,6 @@ public class DAO_Course extends ConnectDB {
                     course.setCREDITS(rs.getString("CREDITS"));
                     course.setDEPARTMENTID(rs.getInt("DEPARTMENTID"));
                     course.setLOCATION(rs.getString("LOCATION"));
-                    course.setURL(rs.getString("URL"));
                     course.setTime(rs.getTime("TIMES"));
                     course.setDate(rs.getDate("DATES"));
                     courses.add(course);
@@ -144,10 +173,41 @@ public class DAO_Course extends ConnectDB {
         }
         return courses;
     }
-    public List<DTO_Course> getCoursesOfInstructor(int instructorId) {
-        String query = "SELECT * FROM `courseinstructor`,`course`,`onlinecourse`,`onsitecourse`\n"
+    
+    public List<DTO_Course> getOnlineCoursesCoursesOfInstructor(int instructorId) {
+        String query = "SELECT * FROM `courseinstructor`,`course`,`onlinecourse`\n"
                 + "WHERE `courseinstructor`.`PERSONID` = ? \n"
-                + "GROUP BY `courseinstructor`.`COURSEID`;";
+                + "AND onlinecourse.COURSEID = course.COURSEID\n"
+                + "AND courseinstructor.COURSEID = course.COURSEID;";
+
+        ArrayList<DTO_Course> courses = new ArrayList<DTO_Course>();
+
+        try {
+            PreparedStatement p = ConnectDB.getConnection().prepareStatement(query);
+            p.setInt(1, instructorId);
+            ResultSet rs = p.executeQuery();
+            if (rs != null) {
+
+                while (rs.next()) {
+                    DTO_Course course = new DTO_Course();
+                    course.setCOURSEID(rs.getInt("COURSEID"));
+                    course.setTITLE(rs.getString("TITLE"));
+                    course.setCREDITS(rs.getString("CREDITS"));
+                    course.setDEPARTMENTID(rs.getInt("DEPARTMENTID"));
+                    course.setURL(rs.getString("URL"));
+                    courses.add(course);
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return courses;
+    }
+    public List<DTO_Course> getOnsiteCoursesCoursesOfInstructor(int instructorId) {
+        String query = "SELECT * FROM `courseinstructor`,`course`,`onsitecourse`\n"
+                + "WHERE `courseinstructor`.`PERSONID` = ? \n"
+                + "AND onsitecourse.COURSEID = course.COURSEID\n"
+                + "AND courseinstructor.COURSEID = course.COURSEID;";
 
         ArrayList<DTO_Course> courses = new ArrayList<DTO_Course>();
 
@@ -164,13 +224,13 @@ public class DAO_Course extends ConnectDB {
                     course.setCREDITS(rs.getString("CREDITS"));
                     course.setDEPARTMENTID(rs.getInt("DEPARTMENTID"));
                     course.setLOCATION(rs.getString("LOCATION"));
-                    course.setURL(rs.getString("URL"));
                     course.setTime(rs.getTime("TIMES"));
                     course.setDate(rs.getDate("DATES"));
                     courses.add(course);
                 }
             }
         } catch (Exception e) {
+            e.printStackTrace();
         }
         return courses;
     }

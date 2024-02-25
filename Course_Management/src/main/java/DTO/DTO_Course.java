@@ -79,8 +79,12 @@ public class DTO_Course {
     }
 
     public String getTimeString() {
-        SimpleDateFormat sdf = new SimpleDateFormat("HH:mm");
-        return sdf.format(new Date(time.getTime()));
+        try {
+            SimpleDateFormat sdf = new SimpleDateFormat("HH:mm");
+            return sdf.format(new Date(time.getTime()));
+        } catch (Exception e) {
+            return "";
+        }
     }
 
     public void setURL(String URL) {
