@@ -19,7 +19,7 @@ public class DTO_Course {
     String URL, LOCATION;
     Date date;
     Time time;
-
+    DTO_Department department;
     public DTO_Course() {
     }
 
@@ -101,6 +101,14 @@ public class DTO_Course {
 
     public void setTime(Time time) {
         this.time = time;
+    }
+
+    public DTO_Department getDepartment() {
+        return department;
+    }
+
+    public void setDepartment(DTO_Department department) {
+        this.department = department;
     }
 
 }
