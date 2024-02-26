@@ -10,6 +10,7 @@ import DAO.DAO_Course;
 import DAO.DAO_StudentGrade;
 import DTO.DTO_Course;
 import DTO.DTO_StudentGrade;
+import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
@@ -22,6 +23,7 @@ import javax.swing.DefaultComboBoxModel;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
+import javax.swing.JTextField;
 import javax.swing.event.CellEditorListener;
 import javax.swing.event.ChangeEvent;
 import javax.swing.table.DefaultTableModel;
@@ -140,6 +142,7 @@ public class GUI_ManageStudentGrade extends javax.swing.JFrame {
                 float grade = Float.parseFloat(DataTable.getValueAt(selectedRow, GRADE_COLUMN_POSITION).toString());
                 try {
                     new BUS_StudentGrade().updateGrade(enrollmentId, grade);
+                    DataTable.editCellAt(selectedRow + 1, GRADE_COLUMN_POSITION);
                 } catch (Exception ex) {
                     ex.printStackTrace();
                 }

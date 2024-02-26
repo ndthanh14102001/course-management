@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Feb 26, 2024 at 06:19 AM
+-- Generation Time: Feb 26, 2024 at 12:22 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.0.30
 
@@ -41,7 +41,9 @@ CREATE TABLE `course` (
 
 INSERT INTO `course` (`COURSEID`, `TITLE`, `CREDITS`, `DEPARTMENTID`) VALUES
 (29, 'OOP', '4', 123),
-(32, 'CTDL', '4', 124);
+(32, 'CTDL', '4', 124),
+(33, 'a', 'a', 123),
+(35, 'C++', '4', 125);
 
 -- --------------------------------------------------------
 
@@ -85,8 +87,8 @@ CREATE TABLE `department` (
 INSERT INTO `department` (`DEPARTMENTID`, `NAME`, `BUDGET`, `STARTDATE`, `ADMINISTRATOR`) VALUES
 (123, 'Department1', 1000, '2001-10-12', ''),
 (124, 'Department2', 1000, '2001-10-12', ''),
-(125, 'Department1', 1000, '2001-10-14', ''),
-(126, 'Department1', 1000, '2001-10-14', 'abc');
+(125, 'Department3', 1000, '2001-10-14', ''),
+(126, 'Department4', 1000, '2001-10-14', 'abc');
 
 -- --------------------------------------------------------
 
@@ -135,7 +137,7 @@ INSERT INTO `onlinecourse` (`COURSEID`, `URL`) VALUES
 CREATE TABLE `onsitecourse` (
   `COURSEID` int(11) NOT NULL,
   `LOCATION` varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
-  `DAYS` varchar(20) DEFAULT NULL,
+  `DAYS` varchar(200) DEFAULT NULL,
   `TIMES` time DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -144,7 +146,7 @@ CREATE TABLE `onsitecourse` (
 --
 
 INSERT INTO `onsitecourse` (`COURSEID`, `LOCATION`, `DAYS`, `TIMES`) VALUES
-(32, 'HCM', 'Sunday ', '02:00:00');
+(35, 'hcm', 'Monday,Tuesday,Wednesday,Thursday', '04:00:00');
 
 -- --------------------------------------------------------
 
@@ -197,10 +199,10 @@ CREATE TABLE `studentgrade` (
 INSERT INTO `studentgrade` (`ENROLLMENTID`, `COURSEID`, `STUDENTID`, `GRADE`) VALUES
 (12, 29, 124, 7),
 (13, 29, 125, 9.5),
-(14, 29, 133, 8),
-(15, 29, 134, 0),
+(14, 29, 133, 9.8),
+(15, 29, 134, 10),
 (16, 29, 135, 8.5),
-(17, 29, 137, NULL),
+(17, 29, 137, 0),
 (20, 32, 124, NULL),
 (21, 32, 125, 8.75),
 (22, 32, 133, NULL);
@@ -269,7 +271,7 @@ ALTER TABLE `studentgrade`
 -- AUTO_INCREMENT for table `course`
 --
 ALTER TABLE `course`
-  MODIFY `COURSEID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=33;
+  MODIFY `COURSEID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=36;
 
 --
 -- AUTO_INCREMENT for table `department`

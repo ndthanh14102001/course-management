@@ -13,7 +13,6 @@ import java.text.SimpleDateFormat;
  * @author Duc Anh
  */
 public class DTO_Course {
-
     int COURSEID, DEPARTMENTID;
     String TITLE, CREDITS;
     String URL, LOCATION;

@@ -7,7 +7,7 @@ package DAO;
 import DTO.DTO_Course;
 import DTO.DTO_Person;
 import DTO.DTO_StudentGrade;
-import Services.ConnectDB;
+import Helper.ConnectDB;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;

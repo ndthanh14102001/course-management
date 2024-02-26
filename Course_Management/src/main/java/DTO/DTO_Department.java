@@ -9,12 +9,12 @@ import java.util.Date;
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 
-
 /**
  *
  * @author Duc Anh
  */
 public class DTO_Department {
+
     int DEPARTMENTID;
     String NAME, ADMINISTRATOR;
     Double BUDGET;
@@ -67,11 +67,17 @@ public class DTO_Department {
         return STARTDATE;
     }
 
+    public String getSTARTDATEString() {
+        try {
+            SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyy");
+            return sdf.format(STARTDATE);
+        } catch (Exception e) {
+            return "";
+        }
+    }
+
     public void setSTARTDATE(Date STARTDATE) {
         this.STARTDATE = STARTDATE;
     }
 
-
-
-    
 }

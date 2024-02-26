@@ -6,7 +6,7 @@ package DAO;
 
 import DTO.DTO_Course;
 import DTO.DTO_Department;
-import Services.ConnectDB;
+import Helper.ConnectDB;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -127,6 +127,7 @@ public class DAO_Course extends ConnectDB {
                 + "course.TITLE, \n"
                 + "course.CREDITS,\n"
                 + "department.NAME as DEPARTMENTNAME,\n"
+                + "department.STARTDATE,\n"
                 + "department.DEPARTMENTID,\n"
                 + "NULL as URL,\n"
                 + "onsitecourse.LOCATION,\n"
@@ -140,6 +141,7 @@ public class DAO_Course extends ConnectDB {
                 + "course.TITLE, \n"
                 + "course.CREDITS,\n"
                 + "department.NAME,\n"
+                + "department.STARTDATE,\n"
                 + "department.DEPARTMENTID,\n"
                 + "onlinecourse.URL as URL,\n"
                 + "NULL,\n"
@@ -160,6 +162,7 @@ public class DAO_Course extends ConnectDB {
                     DTO_Department department = new DTO_Department();
                     department.setNAME(rs.getString("DEPARTMENTNAME"));
                     department.setID(rs.getInt("DEPARTMENTID"));
+                    department.setSTARTDATE(rs.getDate("STARTDATE"));
                     course.setDepartment(department);
                     course.setCOURSEID(rs.getInt("COURSEID"));
                     course.setTITLE(rs.getString("TITLE"));

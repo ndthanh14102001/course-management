@@ -7,6 +7,7 @@ package GUI;
 import BUS.BUS_Course;
 import DAO.DAO_Course;
 import DTO.DTO_Course;
+import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
@@ -18,9 +19,12 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JComboBox;
+import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
+import javax.swing.JTable;
 import javax.swing.RowFilter;
+import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableRowSorter;
 
@@ -71,7 +75,7 @@ public class GUI_Course extends javax.swing.JFrame {
     }
 
     private DefaultTableModel convertCourse(List list_course) {
-        String[] columnNames_course = {"Course ID", "Title", "Credits", "Department", "URL", "Location", "Days", "Time"};
+        String[] columnNames_course = {"Course ID", "Title", "Credits", "Department", "Start Date", "URL", "Location", "Days", "Time"};
         Object[][] data_course = new Object[list_course.size()][columnNames_course.length];
         for (int i = 0; i < list_course.size(); i++) {
             DTO_Course dto__course = (DTO_Course) list_course.get(i);
@@ -79,10 +83,11 @@ public class GUI_Course extends javax.swing.JFrame {
             data_course[i][1] = dto__course.getTITLE();
             data_course[i][2] = dto__course.getCREDITS();
             data_course[i][3] = dto__course.getDepartment().getNAME();
-            data_course[i][4] = dto__course.getURL();
-            data_course[i][5] = dto__course.getLOCATION();
-            data_course[i][6] = dto__course.getDays();
-            data_course[i][7] = dto__course.getTimeString();
+            data_course[i][4] = dto__course.getDepartment().getSTARTDATEString();
+            data_course[i][5] = dto__course.getURL();
+            data_course[i][6] = dto__course.getLOCATION();
+            data_course[i][7] = dto__course.getDays();
+            data_course[i][8] = dto__course.getTimeString();
         }
         DefaultTableModel model_course = new DefaultTableModel(data_course, columnNames_course);
         return model_course;
@@ -95,7 +100,22 @@ public class GUI_Course extends javax.swing.JFrame {
         DefaultTableModel model_course = convertCourse(this.courses);
 
         DataTable_Course.setModel(model_course);
+
         LabelStatus_course.setText("Num Of Course: " + this.courses.size());
+        addEventHoverToCourseTable();
+    }
+
+    void addEventHoverToCourseTable() {
+        DataTable_Course.setDefaultRenderer(Object.class, new DefaultTableCellRenderer() {
+            @Override
+            public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
+                Component c = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
+                if (c instanceof JComponent) {
+                    ((JComponent) c).setToolTipText(value != null ? value.toString() : "");
+                }
+                return c;
+            }
+        });
     }
 
     /**
