@@ -6,14 +6,6 @@ package DAO;
 
 import DTO.DTO_Course;
 import DTO.DTO_Department;
-
-import Services.ConnectDB;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.ArrayList;
-
-import DTO.DTO_OnlineCourse;
 import Services.ConnectDB;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;

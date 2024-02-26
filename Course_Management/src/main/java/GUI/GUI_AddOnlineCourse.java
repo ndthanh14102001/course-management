@@ -6,7 +6,7 @@ package GUI;
 
 import BUS.BUS_Course;
 import BUS.BUS_Department;
-import BUS.BUS_OnlineCourse;
+
 import DTO.DTO_Course;
 import DTO.DTO_Department;
 import java.sql.Date;

@@ -5,10 +5,10 @@
 package GUI;
 
 import BUS.BUS_CourseInstructor;
-import BUS.BUS_OnlineCourse;
+
 import BUS.BUS_Person;
 import DTO.DTO_Course;
-import DTO.DTO_OnlineCourse;
+
 import DTO.DTO_Person;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
