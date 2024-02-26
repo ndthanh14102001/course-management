@@ -12,16 +12,17 @@ import java.sql.Date;
  */
 public class DTO_StudentGrade extends DTO_Person {
 
-    int ENROLLMENTID, STUDENTID, GRADE, COURSEID;
+    int ENROLLMENTID, STUDENTID, COURSEID;
+    float GRADE;
 
-    public DTO_StudentGrade(int ENROLLMENTID, int STUDENTID, int GRADE, int id, String last_name, String first_name, Date hire_date, Date enrollment_date) {
+    public DTO_StudentGrade(int ENROLLMENTID, int STUDENTID, float GRADE, int id, String last_name, String first_name, Date hire_date, Date enrollment_date) {
         super(id, last_name, first_name, hire_date, enrollment_date);
         this.ENROLLMENTID = ENROLLMENTID;
         this.STUDENTID = STUDENTID;
         this.GRADE = GRADE;
     }
 
-    public DTO_StudentGrade(int ENROLLMENTID, int STUDENTID, int GRADE, String last_name, String first_name, Date hire_date, Date enrollment_date) {
+    public DTO_StudentGrade(int ENROLLMENTID, int STUDENTID, float GRADE, String last_name, String first_name, Date hire_date, Date enrollment_date) {
         super(last_name, first_name, hire_date, enrollment_date);
         this.ENROLLMENTID = ENROLLMENTID;
         this.STUDENTID = STUDENTID;
@@ -40,7 +41,7 @@ public class DTO_StudentGrade extends DTO_Person {
         return STUDENTID;
     }
 
-    public int getGRADE() {
+    public float getGRADE() {
         return GRADE;
     }
 
@@ -60,9 +61,8 @@ public class DTO_StudentGrade extends DTO_Person {
         this.STUDENTID = STUDENTID;
     }
 
-    public void setGRADE(int GRADE) {
+    public void setGRADE(float GRADE) {
         this.GRADE = GRADE;
     }
-
 
 }

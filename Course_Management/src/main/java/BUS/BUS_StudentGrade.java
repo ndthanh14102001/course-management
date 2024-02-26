@@ -64,7 +64,7 @@ public class BUS_StudentGrade {
         return daoStudentGrade.delete(ENROLLMENTID, COURSEID);
     }
 
-    public int updateGrade(int ENROLLMENTID, int GRADE) throws SQLException {
+    public int updateGrade(int ENROLLMENTID, float GRADE) throws SQLException {
         return daoStudentGrade.updateGrade(ENROLLMENTID, GRADE);
     }
 }

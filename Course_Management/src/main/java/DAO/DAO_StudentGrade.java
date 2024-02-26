@@ -35,7 +35,7 @@ public class DAO_StudentGrade extends ConnectDB {
                 dtoStudentGrade.setENROLLMENTID(rs.getInt("ENROLLMENTID"));
                 dtoStudentGrade.setCOURSEID(rs.getInt("COURSEID"));
                 dtoStudentGrade.setSTUDENTID(rs.getInt("STUDENTID"));
-                dtoStudentGrade.setGRADE(rs.getInt("GRADE"));
+                dtoStudentGrade.setGRADE(rs.getFloat("GRADE"));
                 dtoStudentGrade.setFirst_name(rs.getString("FIRSTNAME"));
                 dtoStudentGrade.setLast_name(rs.getString("LASTNAME"));
                 list.add(dtoStudentGrade);
@@ -63,7 +63,7 @@ public class DAO_StudentGrade extends ConnectDB {
         PreparedStatement p = DAO_StudentGrade.getConnection().prepareStatement(query);
         p.setInt(1, dtoStudentGrade.getCOURSEID());
         p.setInt(2, dtoStudentGrade.getSTUDENTID());
-        p.setInt(3, dtoStudentGrade.getGRADE());
+        p.setFloat(3, dtoStudentGrade.getGRADE());
         int result = p.executeUpdate();
         return result;
     }
@@ -73,7 +73,7 @@ public class DAO_StudentGrade extends ConnectDB {
         PreparedStatement p = DAO_StudentGrade.getConnection().prepareStatement(query);
         p.setInt(1, dtoStudentGrade.getCOURSEID());
         p.setInt(2, dtoStudentGrade.getSTUDENTID());
-        p.setInt(3, dtoStudentGrade.getGRADE());
+        p.setFloat(3, dtoStudentGrade.getGRADE());
         int result = p.executeUpdate();
         return result;
     }
@@ -104,7 +104,7 @@ public class DAO_StudentGrade extends ConnectDB {
                 dtoStudentGrade.setENROLLMENTID(rs.getInt("ENROLLMENTID"));
                 dtoStudentGrade.setCOURSEID(rs.getInt("COURSEID"));
                 dtoStudentGrade.setSTUDENTID(rs.getInt("STUDENTID"));
-                dtoStudentGrade.setGRADE(rs.getInt("GRADE"));
+                dtoStudentGrade.setGRADE(rs.getFloat("GRADE"));
                 list.add(dtoStudentGrade);
             }
         }
@@ -133,7 +133,7 @@ public class DAO_StudentGrade extends ConnectDB {
                     dtoStudentGrade.setENROLLMENTID(rs.getInt("ENROLLMENTID"));
                     dtoStudentGrade.setCOURSEID(rs.getInt("COURSEID"));
                     dtoStudentGrade.setId(rs.getInt("STUDENTID"));
-                    dtoStudentGrade.setGRADE(rs.getInt("GRADE"));
+                    dtoStudentGrade.setGRADE(rs.getFloat("GRADE"));
                     dtoStudentGrade.setFirst_name(rs.getString("FIRSTNAME"));
                     dtoStudentGrade.setLast_name(rs.getString("LASTNAME"));
                     list.add(dtoStudentGrade);
@@ -189,10 +189,10 @@ public class DAO_StudentGrade extends ConnectDB {
         return result;
     }
 
-    public int updateGrade(int ENROLLMENTID, int GRADE) throws SQLException {
+    public int updateGrade(int ENROLLMENTID, float GRADE) throws SQLException {
         String query = "Update `studentgrade` SET GRADE = ? WHERE ENROLLMENTID = ?";
         PreparedStatement p = ConnectDB.getConnection().prepareStatement(query);
-        p.setInt(1, GRADE);
+        p.setFloat(1, GRADE);
         p.setInt(2, ENROLLMENTID);
         int result = p.executeUpdate();
         return result;
