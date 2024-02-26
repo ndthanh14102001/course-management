@@ -116,11 +116,10 @@
         <DimensionLayout dim="0">
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" alignment="0" attributes="0">
+                  <Component id="LabelSearch" min="-2" pref="81" max="-2" attributes="0"/>
+                  <EmptySpace type="separate" min="-2" max="-2" attributes="0"/>
+                  <Component id="TextFieldSearch_course" max="32767" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
-                  <Component id="LabelSearch" min="-2" pref="123" max="-2" attributes="0"/>
-                  <EmptySpace max="-2" attributes="0"/>
-                  <Component id="TextFieldSearch_course" min="-2" pref="730" max="-2" attributes="0"/>
-                  <EmptySpace pref="504" max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -143,7 +142,7 @@
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Times New Roman" size="20" style="1"/>
             </Property>
-            <Property name="horizontalAlignment" type="int" value="0"/>
+            <Property name="horizontalAlignment" type="int" value="2"/>
             <Property name="text" type="java.lang.String" value="Search:"/>
             <Property name="toolTipText" type="java.lang.String" value=""/>
           </Properties>
@@ -188,7 +187,9 @@
                   <Component id="ButtonAddOnsiteCourse" linkSize="1" min="-2" pref="130" max="-2" attributes="0"/>
                   <EmptySpace type="unrelated" max="-2" attributes="0"/>
                   <Component id="ButtonEdit" linkSize="1" min="-2" pref="108" max="-2" attributes="0"/>
-                  <EmptySpace max="32767" attributes="0"/>
+                  <EmptySpace type="separate" max="-2" attributes="0"/>
+                  <Component id="btnDelete" linkSize="1" min="-2" pref="195" max="-2" attributes="0"/>
+                  <EmptySpace pref="403" max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -200,6 +201,7 @@
                       <Component id="ButtonAddOnlineCourse" linkSize="2" alignment="3" min="-2" pref="39" max="-2" attributes="0"/>
                       <Component id="ButtonEdit" linkSize="2" alignment="3" min="-2" pref="39" max="-2" attributes="0"/>
                       <Component id="ButtonAddOnsiteCourse" linkSize="2" alignment="3" min="-2" pref="39" max="-2" attributes="0"/>
+                      <Component id="btnDelete" alignment="3" min="-2" pref="39" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace pref="20" max="32767" attributes="0"/>
                   <Component id="jScrollPane1" min="-2" pref="274" max="-2" attributes="0"/>
@@ -319,6 +321,20 @@
           </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="ButtonAddOnsiteCourseActionPerformed"/>
+          </Events>
+          <AuxValues>
+            <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="1"/>
+          </AuxValues>
+        </Component>
+        <Component class="javax.swing.JButton" name="btnDelete">
+          <Properties>
+            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+              <Font name="Times New Roman" size="18" style="1"/>
+            </Property>
+            <Property name="text" type="java.lang.String" value="Delete"/>
+          </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnDeleteActionPerformed"/>
           </Events>
           <AuxValues>
             <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="1"/>

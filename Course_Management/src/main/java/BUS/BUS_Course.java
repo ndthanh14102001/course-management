@@ -33,10 +33,14 @@ public class BUS_Course {
         return result;
     }
 
-    public int Delete_course(String course_id) throws SQLException {
-        int result_course = dao__course.Delete_Course(course_id);
-        return result_course;
-
+    public void Delete_course(DTO_Course course) throws SQLException {
+        if (course.getURL() != null) {
+            dao__course.Delete_OnlineCourse(course.getCOURSEID());
+        }
+        if (course.getLOCATION()!= null) {
+            dao__course.Delete_OnsiteCourse(course.getCOURSEID());
+        }
+        dao__course.Delete_Course(course.getCOURSEID());
     }
 
     public List<DTO_Course> getAll() {

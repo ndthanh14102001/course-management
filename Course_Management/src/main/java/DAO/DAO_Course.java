@@ -73,25 +73,25 @@ public class DAO_Course extends ConnectDB {
         p_course.setDate(2, dto__course.getDate());
         p_course.setTime(3, dto__course.getTime());
         p_course.setInt(4, dto__course.getCOURSEID());
-        
+
         p_course.execute();
     }
 
     public int Add_OnlineCourse(DTO_Course dto__course) throws SQLException {
-        String query_course = "Insert ONLINECOURSE ( URL ) VALUES (?)";
+        String query_course = "Insert ONLINECOURSE ( COURSEID,URL ) VALUES (LAST_INSERT_ID(), ?)";
         PreparedStatement p_course = ConnectDB.getConnection().prepareStatement(query_course);
         p_course.setString(1, dto__course.getURL());
 
         int result = p_course.executeUpdate();
         return result;
     }
-    
-     public void Update_OnlineCourse(DTO_Course dto__course) throws SQLException {
+
+    public void Update_OnlineCourse(DTO_Course dto__course) throws SQLException {
         String query_course = "Update ONLINECOURSE SET URL = ?  WHERE COURSEID = ?";
         PreparedStatement p_course = ConnectDB.getConnection().prepareStatement(query_course);
         p_course.setString(1, dto__course.getURL());
         p_course.setInt(2, dto__course.getCOURSEID());
-        
+
         p_course.execute();
     }
 
@@ -106,16 +106,32 @@ public class DAO_Course extends ConnectDB {
         return result_course;
     }
 
-    public int Delete_Course(String course_id) throws SQLException {
+    public int Delete_Course(int course_id) throws SQLException {
         String query_course = "DELETE FROM COURSE WHERE COURSEID = ?";
         PreparedStatement p_course = ConnectDB.getConnection().prepareStatement(query_course);
-        p_course.setString(1, course_id);
+        p_course.setInt(1, course_id);
+        int result = p_course.executeUpdate();
+        return result;
+    }
+
+    public int Delete_OnlineCourse(int course_id) throws SQLException {
+        String query_course = "DELETE FROM ONLINECOURSE WHERE COURSEID = ?";
+        PreparedStatement p_course = ConnectDB.getConnection().prepareStatement(query_course);
+        p_course.setInt(1, course_id);
+        int result = p_course.executeUpdate();
+        return result;
+    }
+
+    public int Delete_OnsiteCourse(int course_id) throws SQLException {
+        String query_course = "DELETE FROM ONSITECOURSE WHERE COURSEID = ?";
+        PreparedStatement p_course = ConnectDB.getConnection().prepareStatement(query_course);
+        p_course.setInt(1, course_id);
         int result = p_course.executeUpdate();
         return result;
     }
 
     public List<DTO_Course> getAll() {
-        String query = "SELECT course.COURSEID, \n"
+        String query = "SELECT * FROM (SELECT course.COURSEID, \n"
                 + "course.TITLE, \n"
                 + "course.CREDITS,\n"
                 + "department.NAME as DEPARTMENTNAME,\n"
@@ -139,7 +155,8 @@ public class DAO_Course extends ConnectDB {
                 + "NULL\n"
                 + "FROM course, onlinecourse,department\n"
                 + "WHERE course.COURSEID = onlinecourse.COURSEID\n"
-                + "AND course.DEPARTMENTID = department.DEPARTMENTID;";
+                + "AND course.DEPARTMENTID = department.DEPARTMENTID) AS A\n"
+                + "ORDER BY COURSEID ASC";
         ResultSet rs = DAO_Department.doReadQuery(query);
         ArrayList<DTO_Course> courses = new ArrayList<DTO_Course>();
 
