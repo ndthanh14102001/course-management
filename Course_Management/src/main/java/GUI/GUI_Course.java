@@ -71,7 +71,7 @@ public class GUI_Course extends javax.swing.JFrame {
     }
 
     private DefaultTableModel convertCourse(List list_course) {
-        String[] columnNames_course = {"Course ID", "Title", "Credits", "Department", "URL", "Location", "Date", "Time"};
+        String[] columnNames_course = {"Course ID", "Title", "Credits", "Department", "URL", "Location", "Days", "Time"};
         Object[][] data_course = new Object[list_course.size()][columnNames_course.length];
         for (int i = 0; i < list_course.size(); i++) {
             DTO_Course dto__course = (DTO_Course) list_course.get(i);
@@ -81,7 +81,7 @@ public class GUI_Course extends javax.swing.JFrame {
             data_course[i][3] = dto__course.getDepartment().getNAME();
             data_course[i][4] = dto__course.getURL();
             data_course[i][5] = dto__course.getLOCATION();
-            data_course[i][6] = dto__course.getDateString();
+            data_course[i][6] = dto__course.getDays();
             data_course[i][7] = dto__course.getTimeString();
         }
         DefaultTableModel model_course = new DefaultTableModel(data_course, columnNames_course);
