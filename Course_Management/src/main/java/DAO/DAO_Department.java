@@ -3,7 +3,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package DAO;
-import Services.ConnectDB;
+import Helper.ConnectDB;
 import DTO.DTO_Department;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
