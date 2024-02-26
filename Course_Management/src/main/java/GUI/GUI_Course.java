@@ -89,6 +89,7 @@ public class GUI_Course extends javax.swing.JFrame {
     }
 
     public void listCourse() throws SQLException {
+        DataTable_Course.removeAll();
         BUS_Course bus__course = new BUS_Course();
         this.courses = bus__course.getAll();
         DefaultTableModel model_course = convertCourse(this.courses);
@@ -118,6 +119,7 @@ public class GUI_Course extends javax.swing.JFrame {
         ButtonAddOnlineCourse = new javax.swing.JButton();
         ButtonEdit = new javax.swing.JButton();
         ButtonAddOnsiteCourse = new javax.swing.JButton();
+        btnDelete = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Manage Department");
@@ -151,7 +153,7 @@ public class GUI_Course extends javax.swing.JFrame {
         PanelFunction.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
 
         LabelSearch.setFont(new java.awt.Font("Times New Roman", 1, 20)); // NOI18N
-        LabelSearch.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        LabelSearch.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         LabelSearch.setText("Search:");
         LabelSearch.setToolTipText("");
 
@@ -169,11 +171,10 @@ public class GUI_Course extends javax.swing.JFrame {
         PanelFunctionLayout.setHorizontalGroup(
             PanelFunctionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(PanelFunctionLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(LabelSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(TextFieldSearch_course, javax.swing.GroupLayout.PREFERRED_SIZE, 730, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(504, Short.MAX_VALUE))
+                .addComponent(LabelSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(TextFieldSearch_course)
+                .addContainerGap())
         );
         PanelFunctionLayout.setVerticalGroup(
             PanelFunctionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -235,6 +236,14 @@ public class GUI_Course extends javax.swing.JFrame {
             }
         });
 
+        btnDelete.setFont(new java.awt.Font("Times New Roman", 1, 18)); // NOI18N
+        btnDelete.setText("Delete");
+        btnDelete.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnDeleteActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout PanelTableLayout = new javax.swing.GroupLayout(PanelTable);
         PanelTable.setLayout(PanelTableLayout);
         PanelTableLayout.setHorizontalGroup(
@@ -250,10 +259,12 @@ public class GUI_Course extends javax.swing.JFrame {
                 .addComponent(ButtonAddOnsiteCourse, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(ButtonEdit, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addComponent(btnDelete, javax.swing.GroupLayout.PREFERRED_SIZE, 195, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(403, Short.MAX_VALUE))
         );
 
-        PanelTableLayout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {ButtonAddOnlineCourse, ButtonAddOnsiteCourse, ButtonEdit});
+        PanelTableLayout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {ButtonAddOnlineCourse, ButtonAddOnsiteCourse, ButtonEdit, btnDelete});
 
         PanelTableLayout.setVerticalGroup(
             PanelTableLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -262,7 +273,8 @@ public class GUI_Course extends javax.swing.JFrame {
                 .addGroup(PanelTableLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(ButtonAddOnlineCourse, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(ButtonEdit, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(ButtonAddOnsiteCourse, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(ButtonAddOnsiteCourse, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnDelete, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 20, Short.MAX_VALUE)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 274, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -309,7 +321,7 @@ public class GUI_Course extends javax.swing.JFrame {
     private void DataTable_CourseMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_DataTable_CourseMouseClicked
         // TODO add your handling code here:
         pos = this.DataTable_Course.getSelectedRow();
-       
+
     }//GEN-LAST:event_DataTable_CourseMouseClicked
 
     private void TextFieldSearch_courseKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_TextFieldSearch_courseKeyReleased
@@ -341,6 +353,19 @@ public class GUI_Course extends javax.swing.JFrame {
         GUI_AddOnsiteCourse.main(null);
         this.dispose();
     }//GEN-LAST:event_ButtonAddOnsiteCourseActionPerformed
+
+    private void btnDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteActionPerformed
+        // TODO add your handling code here:
+        int row = DataTable_Course.getSelectedRow();
+        if (row > -1) {
+            try {
+                new BUS_Course().Delete_course(this.courses.get(row));
+                listCourse();
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(this, "Delete course fail", "Error", JOptionPane.ERROR_MESSAGE);
+            }
+        }
+    }//GEN-LAST:event_btnDeleteActionPerformed
 
     /**
      * @param args the command line arguments
@@ -391,6 +416,7 @@ public class GUI_Course extends javax.swing.JFrame {
     public javax.swing.JPanel PanelTable;
     public javax.swing.JPanel PanelTitle;
     public javax.swing.JTextField TextFieldSearch_course;
+    public javax.swing.JButton btnDelete;
     private javax.swing.JScrollPane jScrollPane1;
     // End of variables declaration//GEN-END:variables
 }
