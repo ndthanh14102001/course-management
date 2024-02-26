@@ -44,7 +44,7 @@ public class GUI_RegistedCourse extends javax.swing.JFrame {
             data[i][2] = course.getCREDITS();
             data[i][3] = course.getURL();
             data[i][4] = course.getLOCATION();
-            data[i][5] = course.getDate();
+            data[i][5] = course.getDays();
             data[i][6] = course.getTime();
         }
 

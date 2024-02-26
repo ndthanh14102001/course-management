@@ -5,7 +5,6 @@
 package DAO;
 
 import DTO.DTO_OfficeAssignment;
-import DTO.DTO_OnlineCourse;
 import DTO.DTO_Person;
 import Services.ConnectDB;
 import java.sql.PreparedStatement;

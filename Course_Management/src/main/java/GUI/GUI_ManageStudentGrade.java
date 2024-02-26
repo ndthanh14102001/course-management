@@ -102,8 +102,8 @@ public class GUI_ManageStudentGrade extends javax.swing.JFrame {
         for (int i = 0; i < list.size(); i++) {
             DTO_StudentGrade dtoStudentGrade = (DTO_StudentGrade) list.get(i);
             data[i][0] = dtoStudentGrade.getId();
-            data[i][1] = dtoStudentGrade.getLast_name();
-            data[i][2] = dtoStudentGrade.getSTUDENTID();
+            data[i][1] = dtoStudentGrade.getFirst_name();
+            data[i][2] = dtoStudentGrade.getLast_name();
             data[i][GRADE_COLUMN_POSITION] = dtoStudentGrade.getGRADE();
         }
         DefaultTableModel model = new DefaultTableModel(data, columnNames) {
@@ -137,7 +137,7 @@ public class GUI_ManageStudentGrade extends javax.swing.JFrame {
                 int selectedRow = DataTable.getSelectedRow();
 
                 int enrollmentId = students.get(selectedRow).getENROLLMENTID();
-                int grade = Integer.parseInt(DataTable.getValueAt(selectedRow, GRADE_COLUMN_POSITION).toString());
+                float grade = Float.parseFloat(DataTable.getValueAt(selectedRow, GRADE_COLUMN_POSITION).toString());
                 try {
                     new BUS_StudentGrade().updateGrade(enrollmentId, grade);
                 } catch (Exception ex) {

@@ -38,7 +38,7 @@ public class GUI_UpdateOnsiteCourse extends javax.swing.JFrame {
         txtCredits.setText(course.getCREDITS());
         txtLocation.setText(course.getLOCATION());
         labelCourseId.setText(String.valueOf(course.getCOURSEID()));
-        dateSelect.setDate(course.getDate());
+        cbSelectDays.setSelectedItem(course.getDays());
         spHour.setValue(course.getTime().getHours());
         spMin.setValue(course.getTime().getMinutes());
         showDepartmentsInCombobox();
@@ -75,7 +75,6 @@ public class GUI_UpdateOnsiteCourse extends javax.swing.JFrame {
         txtCredits = new javax.swing.JTextField();
         jLabel7 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
-        dateSelect = new com.toedter.calendar.JDateChooser();
         jLabel4 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
         txtLocation = new javax.swing.JTextField();
@@ -91,6 +90,7 @@ public class GUI_UpdateOnsiteCourse extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         jLabel10 = new javax.swing.JLabel();
         labelCourseId = new javax.swing.JLabel();
+        cbSelectDays = new javax.swing.JComboBox<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -106,8 +106,6 @@ public class GUI_UpdateOnsiteCourse extends javax.swing.JFrame {
         jLabel7.setText("UPDATE ONSITE COURSE");
 
         jLabel3.setText("Department");
-
-        dateSelect.setMinSelectableDate(new java.util.Date(-62135791093000L));
 
         jLabel4.setText("Location");
 
@@ -134,6 +132,8 @@ public class GUI_UpdateOnsiteCourse extends javax.swing.JFrame {
 
         labelCourseId.setText("Course Id");
 
+        cbSelectDays.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday ", " " }));
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -154,7 +154,7 @@ public class GUI_UpdateOnsiteCourse extends javax.swing.JFrame {
                         .addGroup(layout.createSequentialGroup()
                             .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                            .addComponent(dateSelect, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addComponent(cbSelectDays, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addGroup(layout.createSequentialGroup()
                             .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -190,7 +190,7 @@ public class GUI_UpdateOnsiteCourse extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel7)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 24, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 21, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel10)
                     .addComponent(labelCourseId))
@@ -213,10 +213,10 @@ public class GUI_UpdateOnsiteCourse extends javax.swing.JFrame {
                     .addComponent(jLabel4)
                     .addComponent(txtLocation, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel5)
-                    .addComponent(dateSelect, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                    .addComponent(cbSelectDays, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(9, 9, 9)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel6)
                     .addComponent(jLabel8)
@@ -245,14 +245,14 @@ public class GUI_UpdateOnsiteCourse extends javax.swing.JFrame {
         String location = txtLocation.getText();
         String credits = txtCredits.getText();
         int departmentId = this.departments.get(cbDepartment.getSelectedIndex()).getID();
-        Date date = new Date(dateSelect.getDate().getTime());
+
         Time time = new Time((Integer) spHour.getValue(), (Integer) spMin.getValue(), 0);
         DTO_Course courseToUpdate = new DTO_Course();
         courseToUpdate.setTITLE(title);
         courseToUpdate.setLOCATION(location);
         courseToUpdate.setCREDITS(credits);
         courseToUpdate.setDEPARTMENTID(departmentId);
-        courseToUpdate.setDate(date);
+        courseToUpdate.setDays(cbSelectDays.getSelectedItem().toString());
         courseToUpdate.setTime(time);
         courseToUpdate.setCOURSEID(this.course.getCOURSEID());
         try {
@@ -309,7 +309,7 @@ public class GUI_UpdateOnsiteCourse extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JComboBox<String> cbDepartment;
-    private com.toedter.calendar.JDateChooser dateSelect;
+    private javax.swing.JComboBox<String> cbSelectDays;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;

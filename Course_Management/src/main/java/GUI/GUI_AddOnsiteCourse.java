@@ -6,7 +6,7 @@ package GUI;
 
 import BUS.BUS_Course;
 import BUS.BUS_Department;
-import BUS.BUS_OnlineCourse;
+
 import DTO.DTO_Course;
 import DTO.DTO_Department;
 import java.sql.Date;
@@ -63,12 +63,12 @@ public class GUI_AddOnsiteCourse extends javax.swing.JFrame {
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
         jLabel7 = new javax.swing.JLabel();
-        dateSelect = new com.toedter.calendar.JDateChooser();
         jLabel8 = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
         spHour = new javax.swing.JSpinner();
         spMin = new javax.swing.JSpinner();
         cbDepartment = new javax.swing.JComboBox<>();
+        cbSelectDays = new javax.swing.JComboBox<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -80,7 +80,7 @@ public class GUI_AddOnsiteCourse extends javax.swing.JFrame {
 
         jLabel4.setText("Location");
 
-        jLabel5.setText("Date");
+        jLabel5.setText("Days");
 
         jLabel6.setText("Time");
 
@@ -102,11 +102,11 @@ public class GUI_AddOnsiteCourse extends javax.swing.JFrame {
         jLabel7.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel7.setText("ADD ONSITE COURSE");
 
-        dateSelect.setMinSelectableDate(new java.util.Date(-62135791093000L));
-
         jLabel8.setText("Hour");
 
         jLabel9.setText("Min");
+
+        cbSelectDays.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday ", " " }));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -124,7 +124,7 @@ public class GUI_AddOnsiteCourse extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(dateSelect, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(cbSelectDays, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -159,14 +159,14 @@ public class GUI_AddOnsiteCourse extends javax.swing.JFrame {
 
         layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {jLabel1, jLabel2, jLabel3, jLabel4, jLabel5, jLabel6});
 
-        layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {dateSelect, txtCredits, txtLocation, txtTitle});
+        layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {txtCredits, txtLocation, txtTitle});
 
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addGap(34, 34, 34)
                 .addComponent(jLabel7)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 47, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 44, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
                     .addComponent(txtTitle, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -183,10 +183,10 @@ public class GUI_AddOnsiteCourse extends javax.swing.JFrame {
                     .addComponent(jLabel4)
                     .addComponent(txtLocation, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel5)
-                    .addComponent(dateSelect, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                    .addComponent(cbSelectDays, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(9, 9, 9)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel6)
                     .addComponent(jLabel8)
@@ -209,14 +209,13 @@ public class GUI_AddOnsiteCourse extends javax.swing.JFrame {
         String location = txtLocation.getText();
         String credits = txtCredits.getText();
         int departmentId = this.departments.get(cbDepartment.getSelectedIndex()).getID();
-        Date date = new Date(dateSelect.getDate().getTime());
         Time time = new Time((Integer) spHour.getValue(), (Integer) spMin.getValue(), 0);
         DTO_Course course = new DTO_Course();
         course.setTITLE(title);
         course.setLOCATION(location);
         course.setCREDITS(credits);
         course.setDEPARTMENTID(departmentId);
-        course.setDate(date);
+        course.setDays(cbSelectDays.getSelectedItem().toString());
         course.setTime(time);
 
         try {
@@ -286,7 +285,7 @@ public class GUI_AddOnsiteCourse extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JComboBox<String> cbDepartment;
-    private com.toedter.calendar.JDateChooser dateSelect;
+    private javax.swing.JComboBox<String> cbSelectDays;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;

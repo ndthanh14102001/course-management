@@ -17,7 +17,7 @@ public class DTO_Course {
     int COURSEID, DEPARTMENTID;
     String TITLE, CREDITS;
     String URL, LOCATION;
-    Date date;
+    String days;
     Time time;
     DTO_Department department;
 
@@ -71,20 +71,10 @@ public class DTO_Course {
         return LOCATION;
     }
 
-    public Date getDate() {
-        return date;
+    public String getDays() {
+        return days;
     }
 
-    public String getDateString() {
-        try {
-            SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyy");
-            return sdf.format(date);
-        } catch (Exception e) {
-            return "";
-        }
-    }
-
-    ;
     public Time getTime() {
         return time;
     }
@@ -106,10 +96,6 @@ public class DTO_Course {
         this.LOCATION = LOCATION;
     }
 
-    public void setDate(Date date) {
-        this.date = date;
-    }
-
     public void setTime(Time time) {
         this.time = time;
     }
@@ -122,4 +108,7 @@ public class DTO_Course {
         this.department = department;
     }
 
+    public void setDays(String days) {
+        this.days = days;
+    }
 }
